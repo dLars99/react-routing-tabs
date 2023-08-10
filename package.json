@@ -6,24 +6,39 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs"
+    "build": "rollup -c --bundleConfigAsCjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "repository": "git@github.com:dLars99/react-routing-tabs.git",
   "author": "dLars99 <davidplarsen@gmail.com>",
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@rollup/plugin-commonjs": "^25.0.3",
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-typescript": "^11.1.2",
+    "@storybook/addon-essentials": "^7.2.2",
+    "@storybook/addon-interactions": "^7.2.2",
+    "@storybook/addon-links": "^7.2.2",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.2.2",
+    "@storybook/react": "^7.2.2",
+    "@storybook/react-webpack5": "^7.2.2",
+    "@storybook/testing-library": "^0.2.0",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.20",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "rollup": "^3.28.0",
     "rollup-plugin-dts": "^5.3.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
+    "storybook": "^7.2.2",
     "typescript": "^5.1.6"
   }
 }
