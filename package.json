@@ -1,0 +1,16 @@
+{
+  "name": "react-routing-tabs",
+  "version": "0.1.0",
+  "description": "Accessible tabs component connect to react-router-dom",
+  "main": "src/index.ts",
+  "repository": "git@github.com:dLars99/react-routing-tabs.git",
+  "author": "dLars99 <davidplarsen@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/react": "^18.2.20",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.15.0",
+    "typescript": "^5.1.6"
+  }
+}
