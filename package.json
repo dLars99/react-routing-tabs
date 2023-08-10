@@ -1,0 +1,29 @@
+{
+  "name": "react-routing-tabs",
+  "version": "0.1.0",
+  "description": "Accessible tabs component connect to react-router-dom",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs"
+  },
+  "repository": "git@github.com:dLars99/react-routing-tabs.git",
+  "author": "dLars99 <davidplarsen@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.3",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.20",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.15.0",
+    "rollup": "^3.28.0",
+    "rollup-plugin-dts": "^5.3.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^5.1.6"
+  }
+}
