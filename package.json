@@ -2,7 +2,12 @@
   "name": "react-routing-tabs",
   "version": "0.1.0",
   "description": "Accessible tabs component connect to react-router-dom",
-  "main": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs"
+  },
   "repository": "git@github.com:dLars99/react-routing-tabs.git",
   "author": "dLars99 <davidplarsen@gmail.com>",
   "license": "MIT",
