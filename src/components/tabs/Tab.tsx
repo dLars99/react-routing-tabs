@@ -1,3 +1,13 @@
 import React from "react";
 
-export const Tab = () => <h1>Hey there</h1>;
+interface TabProps {
+  /**
+   * Is this part of a true nav component?
+   */
+  isNav?: boolean;
+}
+
+/**
+ * Component for an individual tab within the tab list
+ */
+export const Tab = ({ isNav = false }: TabProps) => <h1>Hey there</h1>;
