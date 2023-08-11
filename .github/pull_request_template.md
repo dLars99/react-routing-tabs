@@ -2,8 +2,8 @@
 
 ## react-routing-tabs
 
-[!WARNING]
-I'm a stickler for documentation. If this is not filled out, the PR will be rejected! :no-entry"
+> [!WARNING]
+> I'm a stickler for documentation. If this is not filled out, the PR will be rejected! :no-entry:
 
 **Closes #**
 
