@@ -5,7 +5,7 @@
 > [!WARNING]
 > I'm a stickler for documentation. If this is not filled out, the PR will be rejected! :no_entry:
 
-**Closes #**
+Closes #
 
 ### Description
 
