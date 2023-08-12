@@ -4,10 +4,12 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   RoutingTabContextValue,
   RoutingTabsProps,
 } from "./RoutingTabContext.types";
+import { useTabRoutes } from "./hooks";
 
 const defaultValue = {
   changeTab: () => {},
@@ -18,21 +20,19 @@ const defaultValue = {
 const RoutingTabContext =
   createContext<RoutingTabContextValue<any>>(defaultValue);
 
-export const RoutingTabs = <T,>({
-  children,
-  config,
-  data,
-  tabLabelKey,
-}: PropsWithChildren<RoutingTabsProps<T>>): JSX.Element | null => {
+export const RoutingTabs = <T,>(
+  props: PropsWithChildren<RoutingTabsProps<T>>
+): JSX.Element | null => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-
-  // Create route map from config or data or default (tab0, tab1, etc)
+  const navigate = useNavigate();
+  const tabRoutes = useTabRoutes(props);
+  const { children, data } = props;
 
   // Get initial value from route
 
   const changeTab = (newIndex: number): void => {
     setSelectedIndex(newIndex);
-    // Update route
+    navigate(`../${tabRoutes[newIndex]}`);
   };
 
   return (

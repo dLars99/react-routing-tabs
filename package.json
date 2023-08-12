@@ -38,5 +38,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "storybook": "^7.2.3",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "slugify": "^1.6.6"
   }
 }

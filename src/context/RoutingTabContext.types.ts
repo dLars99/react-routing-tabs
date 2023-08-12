@@ -10,7 +10,7 @@ export interface RoutingTabsDataProps<T> {
 }
 
 export interface RoutingTabsConfigProps {
-  config: RoutingTabsConfig;
+  config: RoutingTabsConfig[];
   data?: never;
   tabLabelKey?: never;
 }
