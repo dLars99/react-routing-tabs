@@ -4,34 +4,13 @@ import React, {
   useContext,
   useState,
 } from "react";
-
-type RoutingTabContextValue<T> = {
-  data: T[] | undefined;
-  selectedIndex: number;
-};
-
-type RoutingTabsConfig = {
-  name: string;
-  route?: string;
-};
-
-interface RoutingTabsDataProps<T> {
-  config?: never;
-  data: T[];
-  tabLabelKey?: keyof T;
-}
-
-interface RoutingTabsConfigProps {
-  config: RoutingTabsConfig;
-  data?: never;
-  tabLabelKey?: never;
-}
-
-export type RoutingTabsProps<T> =
-  | RoutingTabsDataProps<T>
-  | RoutingTabsConfigProps;
+import {
+  RoutingTabContextValue,
+  RoutingTabsProps,
+} from "./RoutingTabContext.types";
 
 const defaultValue = {
+  changeTab: () => {},
   data: undefined,
   selectedIndex: 0,
 };
@@ -57,11 +36,10 @@ export const RoutingTabs = <T,>({
   };
 
   return (
-    <RoutingTabContext.Provider value={{ data, selectedIndex }}>
+    <RoutingTabContext.Provider value={{ data, changeTab, selectedIndex }}>
       {children}
     </RoutingTabContext.Provider>
   );
-  return null;
 };
 
 export const useRoutingTabs = useContext(RoutingTabContext);
