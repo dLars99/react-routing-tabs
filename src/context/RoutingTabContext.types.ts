@@ -20,7 +20,8 @@ export type RoutingTabsProps<T> =
   | RoutingTabsConfigProps;
 
 export type RoutingTabContextValue<T> = {
-  data: T[] | undefined;
+  changeRoute: (toPath: string) => void;
   changeTab: (newIndex: number) => void;
+  data: T[] | undefined;
   selectedIndex: number;
 };
