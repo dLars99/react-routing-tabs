@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 export type RoutingTabsConfig = {
   name: string;
   route?: string;
@@ -22,6 +24,7 @@ export type RoutingTabsProps<T> =
 export type RoutingTabContextValue<T> = {
   changeRoute: (toPath: string) => void;
   changeTab: (newIndex: number) => void;
+  childTabs: MutableRefObject<HTMLLIElement[]>;
   data: T[] | undefined;
-  selectedIndex: number;
-};
+  selectedTabIndex: number;
+} | null;

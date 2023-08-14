@@ -1,7 +1,11 @@
 // TODO: map children from correct data
 
+import { MutableRefObject } from "react";
+
 export const mapChildRoutes = (
-  tabChildren: unknown[] = ["a", "b", "c"]
+  childTabs: MutableRefObject<HTMLLIElement[]>
 ): string[] => {
-  return tabChildren.map((child: unknown, index: number) => `tab-${index + 1}`);
+  return childTabs.current.map(
+    (child: HTMLLIElement, index: number) => `tab-${index + 1}`
+  );
 };

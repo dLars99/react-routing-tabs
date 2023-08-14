@@ -3,6 +3,7 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,29 +13,21 @@ import {
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
 
-const defaultValue = {
-  changeRoute: () => {},
-  changeTab: () => {},
-  data: undefined,
-  selectedIndex: 0,
-};
-
-const RoutingTabContext =
-  createContext<RoutingTabContextValue<any>>(defaultValue);
+const RoutingTabContext = createContext<RoutingTabContextValue<any>>(null);
 
 export const RoutingTabs = <T,>(
   props: PropsWithChildren<RoutingTabsProps<T>>
 ): JSX.Element | null => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
+  const childTabs = useRef<HTMLLIElement[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const tabRoutes = useTabRoutes(props);
-  const { children, data } = props;
+  const tabRoutes = useTabRoutes(props, childTabs);
 
-  // Get initial value from route
+  // Get initial index from route
   useEffect(() => {
     if (tabRoutes.length < 1 || !location.pathname) return;
-    const pathSegments = location.pathname.split("/");
+    const pathSegments = location.pathname.split("/"); // TODO: allow for hash nav
     const finalPathSegment = pathSegments[pathSegments.length - 1];
     if (!tabRoutes.includes(finalPathSegment)) {
       navigate(tabRoutes[0], { replace: true });
@@ -42,15 +35,15 @@ export const RoutingTabs = <T,>(
       const pathRouteIndex = tabRoutes.findIndex(
         (route) => route === finalPathSegment
       );
-      if (selectedIndex !== pathRouteIndex) {
-        setSelectedIndex(pathRouteIndex);
+      if (selectedTabIndex !== pathRouteIndex) {
+        setSelectedTabIndex(pathRouteIndex);
       }
     }
   }, [location.pathname, tabRoutes]);
 
   const changeTab = (newIndex: number): void => {
-    if (newIndex === selectedIndex) return;
-    setSelectedIndex(newIndex);
+    if (newIndex === selectedTabIndex) return;
+    setSelectedTabIndex(newIndex);
     navigate(`../${tabRoutes[newIndex]}`); // TODO: allow for hash nav
   };
 
@@ -61,9 +54,15 @@ export const RoutingTabs = <T,>(
 
   return (
     <RoutingTabContext.Provider
-      value={{ changeTab, changeRoute, data, selectedIndex }}
+      value={{
+        changeTab,
+        changeRoute,
+        childTabs,
+        data: props.data,
+        selectedTabIndex,
+      }}
     >
-      {children}
+      {props.children}
     </RoutingTabContext.Provider>
   );
 };
