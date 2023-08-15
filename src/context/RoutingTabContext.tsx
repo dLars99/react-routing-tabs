@@ -1,12 +1,13 @@
 import React, {
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Location, useLocation, useNavigate } from "react-router-dom";
 import {
   RoutingTabContextValue,
   RoutingTabsProps,
@@ -38,13 +39,26 @@ export const RoutingTabs = <T,>(
   const location = useLocation();
   const tabRoutes = useTabRoutes(props, childTabs);
 
+  const getNewLocation = useCallback(
+    (destination: string): string | Location =>
+      props.useHashRouting
+        ? {
+            ...location,
+            hash: destination,
+          }
+        : destination,
+    [location, props.useHashRouting]
+  );
+
   // Get initial index from route
   useEffect(() => {
     if (tabRoutes.length < 1 || !location.pathname) return;
-    const pathSegments = location.pathname.split("/"); // TODO: allow for hash nav
+    const pathSegments = location.pathname.split(
+      props.useHashRouting ? "#" : "/"
+    );
     const finalPathSegment = pathSegments[pathSegments.length - 1];
     if (!tabRoutes.includes(finalPathSegment)) {
-      navigate(tabRoutes[0], { replace: true });
+      navigate(getNewLocation(tabRoutes[0]), { replace: true });
     } else {
       const pathRouteIndex = tabRoutes.findIndex(
         (route) => route === finalPathSegment
@@ -53,18 +67,24 @@ export const RoutingTabs = <T,>(
         setSelectedTabIndex(pathRouteIndex);
       }
     }
-  }, [location.pathname, tabRoutes]);
+  }, [location.pathname, tabRoutes, props.useHashRouting]);
 
-  const changeTab = (newIndex: number): void => {
-    if (newIndex === selectedTabIndex) return;
-    setSelectedTabIndex(newIndex);
-    navigate(`../${tabRoutes[newIndex]}`); // TODO: allow for hash nav
-  };
+  const changeTab = useCallback(
+    (newIndex: number): void => {
+      if (newIndex === selectedTabIndex) return;
+      setSelectedTabIndex(newIndex);
+      navigate(getNewLocation(tabRoutes[newIndex]));
+    },
+    [getNewLocation, navigate, selectedTabIndex, tabRoutes]
+  );
 
   // Optional -- this may fit better in the tab itself
-  const changeRoute = (toPath: string): void => {
-    navigate(toPath); // TODO: allow for hash nav
-  };
+  const changeRoute = useCallback(
+    (toPath: string): void => {
+      navigate(getNewLocation(toPath));
+    },
+    [getNewLocation, navigate]
+  );
 
   return (
     <RoutingTabContext.Provider
@@ -81,7 +101,6 @@ export const RoutingTabs = <T,>(
   );
 };
 
-console.log({ RoutingTabContext });
 export const useRoutingTabs = <T,>() =>
   useContext<RoutingTabContextValue<T>>(RoutingTabContext);
 

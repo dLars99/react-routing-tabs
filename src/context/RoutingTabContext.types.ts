@@ -5,6 +5,10 @@ export type RoutingTabsConfig = {
   route?: string;
 };
 
+export interface RoutingTabsBaseProps {
+  useHashRouting?: boolean;
+}
+
 export interface RoutingTabsDataProps<T> {
   /**
    * Optional configuration object to define the tab names and routes
@@ -53,10 +57,13 @@ export interface RoutingTabsDefaultProps {
   tabLabelKey?: never;
 }
 
-export type RoutingTabsProps<T> =
+export type RoutingTabsOptionalProps<T> =
   | RoutingTabsDataProps<T>
   | RoutingTabsConfigProps
   | RoutingTabsDefaultProps;
+
+export type RoutingTabsProps<T> = RoutingTabsBaseProps &
+  RoutingTabsOptionalProps<T>;
 
 export type RoutingTabContextValue<T> = {
   changeRoute: (toPath: string) => void;
