@@ -13,8 +13,22 @@ import {
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
 
-const RoutingTabContext = createContext<RoutingTabContextValue<any>>(null);
+const defaultValue = {
+  changeRoute: () => {},
+  changeTab: () => {},
+  childTabs: { current: [] },
+  data: undefined,
+  selectedTabIndex: 0,
+};
 
+const RoutingTabContext =
+  createContext<RoutingTabContextValue<any>>(defaultValue);
+
+/**
+ * Component which wraps and defines the tab structure for the section.
+ * Under the hood, this creates a context provider that allows the routing tabs to keep
+ * track of the current selection and routes.
+ */
 export const RoutingTabs = <T,>(
   props: PropsWithChildren<RoutingTabsProps<T>>
 ): JSX.Element | null => {
@@ -67,7 +81,9 @@ export const RoutingTabs = <T,>(
   );
 };
 
-export const useRoutingTabs = useContext(RoutingTabContext);
+console.log({ RoutingTabContext });
+export const useRoutingTabs = <T,>() =>
+  useContext<RoutingTabContextValue<T>>(RoutingTabContext);
 
 // We might want both config AND data
 // If so, add a 'useDataRoutes' prop (in options? config?) to use values from data

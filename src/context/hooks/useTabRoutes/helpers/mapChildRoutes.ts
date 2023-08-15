@@ -1,5 +1,3 @@
-// TODO: map children from correct data
-
 import { MutableRefObject } from "react";
 
 export const mapChildRoutes = (
