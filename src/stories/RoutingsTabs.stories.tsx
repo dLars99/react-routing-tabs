@@ -17,9 +17,52 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Demo: Story = {
+export const Default: Story = {
   render: () => (
     <RoutingTabs>
+      <Tab />
+    </RoutingTabs>
+  ),
+};
+
+const config = [
+  {
+    name: "Tab 1",
+    route: "first",
+  },
+  {
+    name: "Tab 2",
+    route: "second",
+  },
+];
+export const Config: Story = {
+  args: {
+    config,
+  },
+  render: ({ ...args }) => (
+    <RoutingTabs {...args}>
+      <Tab />
+    </RoutingTabs>
+  ),
+};
+
+const data = [
+  {
+    name: "Tab 1",
+    description: "First tab",
+  },
+  {
+    name: "Tab 2",
+    description: "Second tab",
+  },
+];
+export const Data: Story = {
+  args: {
+    data: data,
+    tabLabelKey: "name",
+  },
+  render: ({ ...args }) => (
+    <RoutingTabs {...args}>
       <Tab />
     </RoutingTabs>
   ),
