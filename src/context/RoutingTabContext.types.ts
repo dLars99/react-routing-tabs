@@ -6,6 +6,9 @@ export type RoutingTabsConfig = {
 };
 
 export interface RoutingTabsBaseProps {
+  /**
+   * When true, route as a URL hash instead of appending to the path directly
+   */
   useHashRouting?: boolean;
 }
 
