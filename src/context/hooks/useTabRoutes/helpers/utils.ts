@@ -11,8 +11,10 @@ export const uniqueTabRoute = (
 ): string => {
   let uniqueCurrentEntry = currentEntry;
   let tabNumber = 1; // use letters?
-  while (mappedRoutes.some((existingRoute) => existingRoute === currentEntry)) {
-    uniqueCurrentEntry = currentEntry + `-tab-${tabNumber}`;
+  while (
+    mappedRoutes.some((existingRoute) => existingRoute === uniqueCurrentEntry)
+  ) {
+    uniqueCurrentEntry = currentEntry + `-${tabNumber}`;
     tabNumber++;
   }
   return uniqueCurrentEntry;
