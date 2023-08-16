@@ -8,7 +8,7 @@ export const mapConfigRoutes = (config: RoutingTabsConfig[]): string[] => {
       if (!configEntry.route && !configEntry.name) {
         throw new Error("Missing required properties in RoutingTabs config");
       }
-      let currentEntry = configEntry.route
+      const currentEntry = configEntry.route
         ? slugify(configEntry.route, ROUTE_SLUG_OPTIONS)
         : slugify(configEntry.name, ROUTE_SLUG_OPTIONS);
       cur.push(uniqueTabRoute(currentEntry, cur));
