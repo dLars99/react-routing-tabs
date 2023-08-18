@@ -58,8 +58,10 @@ export const RoutingTabs = <T,>(
     );
     const finalPathSegment = pathSegments[pathSegments.length - 1];
     if (!tabRoutes.includes(finalPathSegment)) {
-      navigate(getNewLocation(tabRoutes[0]), { replace: true });
+      // no tab in route - go to selected tab
+      navigate(getNewLocation(tabRoutes[selectedTabIndex]), { replace: true });
     } else {
+      // make sure our index matches the tab in the route
       const pathRouteIndex = tabRoutes.findIndex(
         (route) => route === finalPathSegment
       );

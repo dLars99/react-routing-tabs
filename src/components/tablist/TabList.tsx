@@ -4,9 +4,10 @@ import React, {
   PropsWithChildren,
   Ref,
   forwardRef,
+  useState,
 } from "react";
 import { useRoutingTabs } from "../../context";
-import { useKeymap } from "./hooks";
+import { useKeyboardNavigation } from "./hooks";
 
 export interface TabListProps extends ComponentPropsWithRef<"ul"> {
   /**
@@ -41,12 +42,21 @@ export const TabList = forwardRef(
       console.error(tabListContextError);
       throw new Error(tabListContextError);
     }
-    const { changeTab, childTabs } = tabContext;
+    const { changeTab, childTabs, selectedTabIndex } = tabContext;
+    const getKey = useKeyboardNavigation(orientation, childTabs);
+
+    const [focusedTabIndex, setFocusedTabIndex] =
+      useState<number>(selectedTabIndex);
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      const key = useKeymap(e.key, orientation);
+      const key = getKey(e.key, focusedTabIndex);
+      console.log(e.key, key); // temporary for testing
       if (key.type === "no-action") return;
-      childTabs.current[key.value].focus();
+
+      e.preventDefault();
+      e.stopPropagation();
+      setFocusedTabIndex(key.value);
+      childTabs.current[key.value]?.focus();
       if (selectionMethod === "automatic" || key.type === "select")
         changeTab(key.value);
     };
