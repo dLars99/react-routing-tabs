@@ -8,6 +8,8 @@ import React, {
 } from "react";
 import { useRoutingTabs } from "../../context";
 import { useKeyboardNavigation } from "./hooks";
+import classNames from "classnames";
+import "./styles/tablist.css";
 
 export interface TabListProps extends ComponentPropsWithRef<"ul"> {
   /**
@@ -29,6 +31,7 @@ export const TabList = forwardRef(
   (
     {
       children,
+      className,
       orientation = "horizontal",
       selectionMethod = "automatic",
       ...rest
@@ -65,6 +68,12 @@ export const TabList = forwardRef(
       <ul
         aria-label="PLACEHOLDER"
         aria-orientation={orientation}
+        className={classNames(
+          "tablist",
+          { tablist__horizontal: orientation === "horizontal" },
+          { tablist__vertical: orientation === "vertical" },
+          className ? { [className]: className } : ""
+        )}
         onKeyDown={handleKeyDown}
         ref={outsideListRef}
         role="tablist"
