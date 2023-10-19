@@ -2,7 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { RoutingTabs } from "../context";
-import { Tab } from "../components";
+import { Tab, TabList } from "../components";
 
 const meta = {
   title: "Routing Tabs",
@@ -20,7 +20,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <RoutingTabs>
-      <Tab />
+      <TabList>
+        <Tab />
+      </TabList>
     </RoutingTabs>
   ),
 };
@@ -41,7 +43,9 @@ export const Config: Story = {
   },
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
-      <Tab />
+      <TabList>
+        <Tab />
+      </TabList>
     </RoutingTabs>
   ),
 };
@@ -63,7 +67,9 @@ export const Data: Story = {
   },
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
-      <Tab />
+      <TabList>
+        <Tab />
+      </TabList>
     </RoutingTabs>
   ),
 };
