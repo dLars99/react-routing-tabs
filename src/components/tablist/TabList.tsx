@@ -30,6 +30,7 @@ export interface TabListProps extends ComponentPropsWithRef<"ul"> {
 export const TabList = forwardRef(
   (
     {
+      "aria-label": ariaLabel = "tablist",
       children,
       className,
       orientation = "horizontal",
@@ -66,7 +67,7 @@ export const TabList = forwardRef(
 
     return (
       <ul
-        aria-label="PLACEHOLDER"
+        aria-label={ariaLabel}
         aria-orientation={orientation}
         className={classNames(
           "tablist",
