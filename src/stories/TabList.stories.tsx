@@ -10,6 +10,9 @@ const meta = {
   parameters: {
     layout: "centered",
   },
+  args: {
+    selectionMethod: "automatic",
+  },
   argTypes: {
     orientation: {
       options: ["horizontal", "vertical"],

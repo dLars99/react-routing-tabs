@@ -14,16 +14,7 @@ import {
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
 
-const defaultValue = {
-  changeRoute: () => {},
-  changeTab: () => {},
-  childTabs: { current: [] },
-  data: undefined,
-  selectedTabIndex: 0,
-};
-
-const RoutingTabContext =
-  createContext<RoutingTabContextValue<any>>(defaultValue);
+const RoutingTabContext = createContext<RoutingTabContextValue<any>>(null);
 
 /**
  * Component which wraps and defines the tab structure for the section.

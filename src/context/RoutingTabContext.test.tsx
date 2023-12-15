@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { RoutingTabs, useRoutingTabs } from "./RoutingTabContext";
 import { enableFetchMocks } from "jest-fetch-mock";
+import { TabList } from "../components/tablist";
 
 enableFetchMocks();
 
@@ -15,11 +16,11 @@ const TestConsumer = () => {
   const { changeTab, selectedTabIndex } = routingTabContext;
 
   return (
-    <div>
+    <TabList>
       <p>Howdy!</p>
       <p>{selectedTabIndex}</p>
       <button onClick={() => changeTab(1)}>Increase tab</button>
-    </div>
+    </TabList>
   );
 };
 
@@ -225,6 +226,8 @@ it("should select the current tab from the url if one is provided", async () => 
 });
 
 it("should throw an error if a config item is missing required properties", async () => {
+  const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
   const router = createMemoryRouter(brokenConfigRoutes, {
     initialEntries: ["/"],
   });
@@ -233,9 +236,13 @@ it("should throw an error if a config item is missing required properties", asyn
   expect(
     screen.getByText("Missing required properties in RoutingTabs config")
   ).toBeInTheDocument();
+
+  consoleSpy.mockRestore();
 });
 
 it("should throw an error if a data item is missing the tabLabelKey", async () => {
+  const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
   const router = createMemoryRouter(brokenDataRoutes, {
     initialEntries: ["/"],
   });
@@ -248,4 +255,6 @@ it("should throw an error if a data item is missing the tabLabelKey", async () =
       "RoutingTabs data item missing property named by tabLabelKey"
     )
   ).toBeInTheDocument();
+
+  consoleSpy.mockRestore();
 });

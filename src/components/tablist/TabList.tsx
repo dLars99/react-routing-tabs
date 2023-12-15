@@ -24,8 +24,8 @@ export interface TabListProps extends ComponentPropsWithRef<"ul"> {
 }
 
 /**
- * Element which acts as a container for the tabs
- * Renders as a <ul> tag and accepts an optional ref from the user
+ * Element which acts as a container for the tabs.
+ * Renders as a `ul` tag and accepts an optional ref from the user
  */
 export const TabList = forwardRef(
   (
@@ -47,6 +47,7 @@ export const TabList = forwardRef(
       throw new Error(tabListContextError);
     }
     const { changeTab, childTabs, selectedTabIndex } = tabContext;
+
     const getKey = useKeyboardNavigation(orientation, childTabs);
 
     const [focusedTabIndex, setFocusedTabIndex] =
