@@ -14,16 +14,7 @@ import {
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
 
-const defaultValue = {
-  changeRoute: () => {},
-  changeTab: () => {},
-  childTabs: { current: [] },
-  data: undefined,
-  selectedTabIndex: 0,
-};
-
-const RoutingTabContext =
-  createContext<RoutingTabContextValue<any>>(defaultValue);
+const RoutingTabContext = createContext<RoutingTabContextValue<any>>(null);
 
 /**
  * Component which wraps and defines the tab structure for the section.
@@ -58,8 +49,10 @@ export const RoutingTabs = <T,>(
     );
     const finalPathSegment = pathSegments[pathSegments.length - 1];
     if (!tabRoutes.includes(finalPathSegment)) {
-      navigate(getNewLocation(tabRoutes[0]), { replace: true });
+      // no tab in route - go to selected tab
+      navigate(getNewLocation(tabRoutes[selectedTabIndex]), { replace: true });
     } else {
+      // make sure our index matches the tab in the route
       const pathRouteIndex = tabRoutes.findIndex(
         (route) => route === finalPathSegment
       );
