@@ -1,6 +1,8 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Tab } from "../components";
+import { RoutingTabs } from "../context";
 
 const meta = {
   title: "Tab",
@@ -19,4 +21,9 @@ export const Nav: Story = {
   args: {
     isNav: true,
   },
+  render: ({ ...args }) => (
+    <RoutingTabs>
+      <Tab {...args} />
+    </RoutingTabs>
+  ),
 };
