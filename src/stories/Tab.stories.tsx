@@ -19,7 +19,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Nav: Story = {
   args: {
+    label: "Hi",
     isNav: true,
+    tabIndex: 0,
   },
   render: ({ ...args }) => (
     <RoutingTabs>

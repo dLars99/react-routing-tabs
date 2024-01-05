@@ -61,6 +61,16 @@ describe("TabList", () => {
     expect(screen.getByText("Howdy!")).toBeInTheDocument();
   });
 
+  it("should render a tablist", async () => {
+    const router = createMemoryRouter(horizontalTestRoutes, {
+      initialEntries: ["/tab-0"],
+    });
+    render(<RouterProvider router={router} />);
+
+    await screen.findByRole("tablist");
+    expect(screen.getByRole("tablist")).toBeInTheDocument();
+  });
+
   it("should render horizontally when indicated", async () => {
     const router = createMemoryRouter(horizontalTestRoutes, {
       initialEntries: ["/tab-0"],

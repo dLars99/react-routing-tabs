@@ -1,46 +1,23 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { useRoutingTabs } from "../../context";
-import { Link, NavLink } from "react-router-dom";
 import "./styles/tab.css";
-
-interface TabProps {
-  /**
-   * Use children for custom content
-   */
-  children?: ReactNode;
-  /**
-   * Is this part of a true nav component?
-   */
-  isNav?: boolean;
-  /**
-   * Display text for the tab
-   */
-  label: string;
-  /**
-   * Destination link for the tab
-   */
-  link?: string;
-}
+import { AnchorTab } from "./AnchorTab";
+import { ButtonTab } from "./ButtonTab";
+import { TabProps } from "./Tab.types";
 
 /**
  * Component for an individual tab within the tab list
  */
-export const Tab = ({
-  children,
-  isNav = false,
-  label = "Tab",
-  link = "./",
-}: TabProps) => {
+export const Tab = (props: TabProps) => {
   const routingTabContext = useRoutingTabs();
   if (!routingTabContext)
     throw new Error("Tab must be wrapped in a RoutingTabs component");
-  return isNav ? (
-    <NavLink className="tab" role="tab" to={link}>
-      {children ?? label}
-    </NavLink>
-  ) : (
-    <Link className="tab" role="tab" to={link}>
-      {children ?? label}
-    </Link>
+
+  const isAnchor = "link" in props && !!props.link;
+
+  return (
+    <li className="tab" role="tab">
+      {isAnchor ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
+    </li>
   );
 };
