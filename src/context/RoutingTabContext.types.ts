@@ -70,8 +70,9 @@ export type RoutingTabsProps<T> = RoutingTabsBaseProps &
 
 export type RoutingTabContextValue<T> = {
   changeRoute: (toPath: string) => void;
-  changeTab: (newIndex: number) => void;
+  changeTab: (id: string) => void;
   childTabs: MutableRefObject<HTMLLIElement[]>;
   data: T[] | undefined;
   selectedTabIndex: number;
+  tabRef: (node: HTMLLIElement) => void;
 } | null;

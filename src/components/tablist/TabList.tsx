@@ -61,9 +61,10 @@ export const TabList = forwardRef(
       e.preventDefault();
       e.stopPropagation();
       setFocusedTabIndex(key.value);
-      childTabs.current[key.value]?.focus();
+      const nextTab = childTabs.current[key.value];
+      nextTab.focus();
       if (selectionMethod === "automatic" || key.type === "select")
-        changeTab(key.value);
+        changeTab(nextTab.id);
     };
 
     return (

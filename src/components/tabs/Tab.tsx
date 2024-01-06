@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { useRoutingTabs } from "../../context";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
@@ -13,10 +13,15 @@ export const Tab = (props: TabProps) => {
   if (!routingTabContext)
     throw new Error("Tab must be wrapped in a RoutingTabs component");
 
+  const { changeTab, tabRef } = routingTabContext;
+  const id = useId();
   const isAnchor = "link" in props && !!props.link;
+  const onClick = () => {
+    changeTab(id);
+  };
 
   return (
-    <li className="tab" role="tab">
+    <li onClick={onClick} ref={tabRef} className="tab" id={id} role="tab">
       {isAnchor ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
     </li>
   );

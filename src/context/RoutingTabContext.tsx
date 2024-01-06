@@ -30,6 +30,18 @@ export const RoutingTabs = <T,>(
   const location = useLocation();
   const tabRoutes = useTabRoutes(props, childTabs);
 
+  const assignChildTab = useCallback(
+    (node: HTMLLIElement): void => {
+      const childTabIndex = childTabs.current.findIndex(
+        (childTab) => childTab?.id === node?.id
+      );
+      if (childTabIndex === -1) {
+        childTabs.current.push(node);
+      }
+    },
+    [childTabs]
+  );
+
   const getNewLocation = useCallback(
     (destination: string): string | Location =>
       props.useHashRouting
@@ -63,7 +75,8 @@ export const RoutingTabs = <T,>(
   }, [location.pathname, tabRoutes, props.useHashRouting]);
 
   const changeTab = useCallback(
-    (newIndex: number): void => {
+    (id: string): void => {
+      const newIndex = childTabs.current.findIndex((tab) => tab.id === id);
       if (newIndex === selectedTabIndex) return;
       setSelectedTabIndex(newIndex);
       navigate(getNewLocation(tabRoutes[newIndex]));
@@ -87,6 +100,7 @@ export const RoutingTabs = <T,>(
         childTabs,
         data: props.data,
         selectedTabIndex,
+        tabRef: assignChildTab,
       }}
     >
       {props.children}
