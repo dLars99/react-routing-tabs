@@ -12,7 +12,7 @@ interface TabBaseProps {
   /**
    * Index for the tab within the tablist
    */
-  tabIndex: number;
+  tabIndex?: number;
 }
 
 export interface ButtonTabProps extends TabBaseProps {}

@@ -19,7 +19,7 @@ const TestConsumer = () => {
     <TabList>
       <p>Howdy!</p>
       <p>{selectedTabIndex}</p>
-      <button onClick={() => changeTab(1)}>Increase tab</button>
+      <button onClick={() => changeTab("1")}>Increase tab</button>
     </TabList>
   );
 };

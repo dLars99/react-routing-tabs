@@ -7,6 +7,10 @@
   padding: 4px 12px 0;
 }
 
+.tab:focus {
+  background-color: aqua;
+}
+
 .tab__link {
   color: inherit;
   font-family: inherit;

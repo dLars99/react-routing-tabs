@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { RoutingTabs } from "../../context";
@@ -6,11 +6,17 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Tab } from "./Tab";
 import { TabList } from "../tablist";
 
-const FullTestComponent = ({ link }: { link?: string }) => (
+const FullTestComponent = ({
+  children,
+  link,
+}: {
+  children?: ReactNode;
+  link?: string;
+}) => (
   <RoutingTabs>
     <TabList>
       <Tab label="tab1" link={link} tabIndex={0}>
-        Howdy!
+        {children}
       </Tab>
     </TabList>
   </RoutingTabs>
@@ -19,7 +25,7 @@ const FullTestComponent = ({ link }: { link?: string }) => (
 const defaultTestRoutes = [
   {
     path: "*",
-    element: <FullTestComponent link="tab2" />,
+    element: <FullTestComponent link="tab2">Howdy!</FullTestComponent>,
   },
 ];
 
@@ -79,5 +85,15 @@ describe("Tab", () => {
 
     await screen.findByRole("button");
     expect(screen.getByRole("button")).toBeInTheDocument();
+  });
+
+  it("should render the label when no children are provided", async () => {
+    const router = createMemoryRouter(linklessTestRoutes, {
+      initialEntries: ["/tab-0"],
+    });
+    render(<RouterProvider router={router} />);
+
+    await screen.findByText("tab1");
+    expect(screen.getByText("tab1")).toBeInTheDocument();
   });
 });
