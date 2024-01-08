@@ -15,7 +15,7 @@ export const Tab = (props: TabProps) => {
 
   const { changeTab, tabRef } = routingTabContext;
   const id = useId();
-  const isAnchor = "link" in props && !!props.link;
+  const isAnchor = "link" in props && typeof props.link === "string";
   const onClick = () => {
     changeTab(id);
   };

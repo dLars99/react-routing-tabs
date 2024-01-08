@@ -9,7 +9,7 @@ import { TabList } from "../tablist";
 const FullTestComponent = ({ link }: { link?: string }) => (
   <RoutingTabs>
     <TabList>
-      <Tab label="tab1" link={link}>
+      <Tab label="tab1" link={link} tabIndex={0}>
         Howdy!
       </Tab>
     </TabList>
@@ -35,7 +35,7 @@ describe("Tab", () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    expect(() => render(<Tab label="Howdy!" />)).toThrow(
+    expect(() => render(<Tab label="Howdy!" tabIndex={0} />)).toThrow(
       "Tab must be wrapped in a RoutingTabs component"
     );
     consoleSpy.mockRestore();

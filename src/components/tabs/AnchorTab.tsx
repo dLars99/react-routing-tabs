@@ -2,7 +2,12 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AnchorTabProps } from "./Tab.types";
 
-export const AnchorTab = ({ children, isNav, label, link }: AnchorTabProps) =>
+export const AnchorTab = ({
+  children,
+  isNav = false,
+  label,
+  link,
+}: AnchorTabProps) =>
   isNav ? (
     <NavLink className="tab__link" to={link}>
       {children ?? label}

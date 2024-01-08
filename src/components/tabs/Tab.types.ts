@@ -15,13 +15,13 @@ interface TabBaseProps {
   tabIndex: number;
 }
 
-export type ButtonTabProps = TabBaseProps;
+export interface ButtonTabProps extends TabBaseProps {}
 
 export interface AnchorTabProps extends TabBaseProps {
   /**
    * Is this part of a true nav component?
    */
-  isNav: boolean;
+  isNav?: boolean;
   /**
    * Destination link for the tab
    */
