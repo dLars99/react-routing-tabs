@@ -35,10 +35,10 @@ const getPreviousAvailableTab = (
 export const useKeyboardNavigation =
   (
     orientation: "horizontal" | "vertical",
-    childTabs: MutableRefObject<HTMLLIElement[]>
+    childTabs: HTMLLIElement[]
   ): GetNewIndexFromKey =>
   (key, currentIndex) => {
-    const childTabElements = childTabs.current;
+    const childTabElements = childTabs;
     let value = currentIndex;
     let type: KeySelectionType = "no-action";
 

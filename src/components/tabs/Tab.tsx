@@ -1,4 +1,4 @@
-import React, { ForwardedRef, Ref, forwardRef, useId, useMemo } from "react";
+import React, { ForwardedRef, forwardRef, useCallback, useId } from "react";
 import { useRoutingTabs } from "../../context";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
@@ -17,15 +17,16 @@ export const Tab = forwardRef(
       throw new Error("Tab must be wrapped in a RoutingTabs component");
 
     const { changeTab, childTabs, selectedTabId, tabRef } = routingTabContext;
-    const combinedRef = (node: HTMLLIElement) => {
+    const combinedRef = useCallback((node: HTMLLIElement) => {
       tabRef(node);
       if (typeof outsideTabRef === "function") {
         outsideTabRef(node);
       } else if (outsideTabRef) {
         outsideTabRef.current = node;
       }
-    };
-    const id = useId();
+    }, []);
+
+    const id = useId().replace(/:/g, "");
     const tabId = tabPrefix + id;
     const isSelected = tabId === selectedTabId;
     const isAnchor = "link" in props && typeof props.link === "string";

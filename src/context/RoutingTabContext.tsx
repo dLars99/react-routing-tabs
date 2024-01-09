@@ -4,7 +4,6 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { Location, useLocation, useNavigate } from "react-router-dom";
@@ -25,21 +24,18 @@ export const RoutingTabs = <T,>(
   props: PropsWithChildren<RoutingTabsProps<T>>
 ): JSX.Element | null => {
   const [selectedTabId, setSelectedTabId] = useState<string>("");
-  const childTabs = useRef<HTMLLIElement[]>([]);
+  const [childTabs, setChildTabs] = useState<HTMLLIElement[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
-  // const tabRoutes = useTabRoutes(props, childTabs);
-  const tabRoutes: Record<string, string> = {
-    id: "./abc",
-  };
+  const tabRoutes = useTabRoutes(props, childTabs);
 
   const assignChildTab = useCallback(
     (node: HTMLLIElement): void => {
-      const childTabIndex = childTabs.current.findIndex(
+      const childTabIndex = childTabs.findIndex(
         (childTab: HTMLLIElement) => childTab?.id === node?.id
       );
       if (node && childTabIndex === -1) {
-        childTabs.current.push(node);
+        setChildTabs((currentTabs) => [...currentTabs, node]);
       }
     },
     [childTabs]
@@ -63,13 +59,21 @@ export const RoutingTabs = <T,>(
       props.useHashRouting ? "#" : "/"
     );
     const finalPathSegment = pathSegments[pathSegments.length - 1];
-    if (!tabRoutes[finalPathSegment]) {
+    if (!tabRoutes.includes(finalPathSegment)) {
       // no tab in route - go to selected tab
-      // navigate(getNewLocation(tabRoutes[selectedTabId]), { replace: true });
+      const selectedIndex = childTabs.findIndex(
+        (childTab) => childTab.id === selectedTabId
+      );
+      navigate(getNewLocation(tabRoutes[selectedIndex || 0]), {
+        replace: true,
+      });
     } else {
       // make sure our index matches the tab in the route
-      const pathRouteId = tabRoutes[finalPathSegment];
-      if (selectedTabId !== pathRouteId) {
+      const pathRouteIndex = tabRoutes.findIndex(
+        (tabRoute) => tabRoute === finalPathSegment
+      );
+      const pathRouteId = childTabs[pathRouteIndex].id;
+      if (pathRouteId && selectedTabId !== pathRouteId) {
         setSelectedTabId(pathRouteId);
       }
     }
