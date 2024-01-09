@@ -11,6 +11,10 @@
   background-color: aqua;
 }
 
+.active {
+  background-color: red;
+}
+
 .tab__link {
   color: inherit;
   font-family: inherit;

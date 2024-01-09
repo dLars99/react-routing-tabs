@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ComponentPropsWithRef, ReactNode } from "react";
 
-interface TabBaseProps {
+interface TabBaseProps extends ComponentPropsWithRef<"li"> {
   /**
    * Use children for custom content
    */

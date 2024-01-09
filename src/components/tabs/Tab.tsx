@@ -4,8 +4,9 @@ import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
 import { ButtonTab } from "./ButtonTab";
 import { TabProps } from "./Tab.types";
+import classNames from "classnames";
+import { panelPrefix, tabPrefix } from "../../utils";
 
-const tabPrefix = "rrtTab-";
 /**
  * Component for an individual tab within the tab list
  */
@@ -15,8 +16,7 @@ export const Tab = forwardRef(
     if (!routingTabContext)
       throw new Error("Tab must be wrapped in a RoutingTabs component");
 
-    const { changeTab, childTabs, selectedTabIndex, tabRef } =
-      routingTabContext;
+    const { changeTab, childTabs, selectedTabId, tabRef } = routingTabContext;
     const combinedRef = (node: HTMLLIElement) => {
       tabRef(node);
       if (typeof outsideTabRef === "function") {
@@ -25,26 +25,25 @@ export const Tab = forwardRef(
         outsideTabRef.current = node;
       }
     };
-
-    const id = tabPrefix + useId();
-    const isSelected = useMemo(() => {
-      const thisTabIndex = childTabs.current.findIndex(
-        (childId: HTMLLIElement) => childId?.id === id
-      );
-      return thisTabIndex === selectedTabIndex;
-    }, [childTabs, selectedTabIndex]);
+    const id = useId();
+    const tabId = tabPrefix + id;
+    const isSelected = tabId === selectedTabId;
     const isAnchor = "link" in props && typeof props.link === "string";
 
     const onClick = () => {
-      changeTab(id);
+      changeTab(tabId);
     };
 
     return (
       <li
-        aria-controls={`rrtPanel-${id}`}
+        aria-controls={panelPrefix + id}
         aria-selected={isSelected}
-        className="tab"
-        id={id}
+        className={classNames(
+          "tab",
+          { active: isSelected },
+          props.className ? { [props.className]: props.className } : ""
+        )}
+        id={tabId}
         onClick={onClick}
         ref={combinedRef}
         role="tab"

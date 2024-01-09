@@ -46,12 +46,11 @@ export const TabList = forwardRef(
       console.error(tabListContextError);
       throw new Error(tabListContextError);
     }
-    const { changeTab, childTabs, selectedTabIndex } = tabContext;
+    const { changeTab, childTabs } = tabContext;
 
     const getKey = useKeyboardNavigation(orientation, childTabs);
 
-    const [focusedTabIndex, setFocusedTabIndex] =
-      useState<number>(selectedTabIndex);
+    const [focusedTabIndex, setFocusedTabIndex] = useState<number>(0);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = getKey(e.key, focusedTabIndex);

@@ -73,6 +73,6 @@ export type RoutingTabContextValue<T> = {
   changeTab: (id: string) => void;
   childTabs: MutableRefObject<HTMLLIElement[]>;
   data: T[] | undefined;
-  selectedTabIndex: number;
+  selectedTabId: string;
   tabRef: (node: HTMLLIElement) => void;
 } | null;
