@@ -13,7 +13,8 @@ import {
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
 
-const RoutingTabContext = createContext<RoutingTabContextValue<any>>(null);
+export const RoutingTabContext =
+  createContext<RoutingTabContextValue<any>>(null);
 
 /**
  * Component which wraps and defines the tab structure for the section.
@@ -54,7 +55,7 @@ export const RoutingTabs = <T,>(
 
   // Get initial index from route
   useEffect(() => {
-    if (Object.keys(tabRoutes).length < 1 || !location.pathname) return;
+    if (tabRoutes.length < 1 || !location.pathname) return;
     const pathSegments = location.pathname.split(
       props.useHashRouting ? "#" : "/"
     );
@@ -64,9 +65,15 @@ export const RoutingTabs = <T,>(
       const selectedIndex = childTabs.findIndex(
         (childTab) => childTab.id === selectedTabId
       );
-      navigate(getNewLocation(tabRoutes[selectedIndex || 0]), {
-        replace: true,
-      });
+      if (selectedIndex === -1) {
+        setSelectedTabId(childTabs[0]?.id);
+      }
+      navigate(
+        getNewLocation(tabRoutes[selectedIndex > -1 ? selectedIndex : 0]),
+        {
+          replace: true,
+        }
+      );
     } else {
       // make sure our index matches the tab in the route
       const pathRouteIndex = tabRoutes.findIndex(
@@ -82,24 +89,25 @@ export const RoutingTabs = <T,>(
   const changeTab = useCallback(
     (id: string): void => {
       setSelectedTabId(id);
-      // navigate(getNewLocation(tabRoutes[newIndex]));
+      changeRouteFromId(id);
     },
-    [getNewLocation, navigate, selectedTabId, tabRoutes]
+    [childTabs, getNewLocation, navigate, tabRoutes]
   );
 
-  // Optional -- this may fit better in the tab itself
-  const changeRoute = useCallback(
-    (toPath: string): void => {
-      navigate(getNewLocation(toPath));
+  const changeRouteFromId = useCallback(
+    (id: string): void => {
+      const newRouteIndex =
+        childTabs.findIndex((childTab) => childTab.id === id) ?? 0;
+      navigate(getNewLocation(tabRoutes[newRouteIndex]));
     },
-    [getNewLocation, navigate]
+    [childTabs, getNewLocation, navigate]
   );
 
   return (
     <RoutingTabContext.Provider
       value={{
         changeTab,
-        changeRoute,
+        changeRoute: changeRouteFromId,
         childTabs,
         data: props.data,
         selectedTabId,

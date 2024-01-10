@@ -1,4 +1,10 @@
-import React, { ForwardedRef, forwardRef, useCallback, useId } from "react";
+import React, {
+  ForwardedRef,
+  MouseEvent,
+  forwardRef,
+  useCallback,
+  useId,
+} from "react";
 import { useRoutingTabs } from "../../context";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
@@ -12,11 +18,14 @@ import { panelPrefix, tabPrefix } from "../../utils";
  */
 export const Tab = forwardRef(
   (props: TabProps, outsideTabRef?: ForwardedRef<HTMLLIElement>) => {
+    const tabContextError = "Tab must be wrapped in a RoutingTabs component";
     const routingTabContext = useRoutingTabs();
-    if (!routingTabContext)
-      throw new Error("Tab must be wrapped in a RoutingTabs component");
+    if (!routingTabContext) {
+      console.error(tabContextError);
+      throw new Error(tabContextError);
+    }
 
-    const { changeTab, childTabs, selectedTabId, tabRef } = routingTabContext;
+    const { changeTab, selectedTabId, tabRef } = routingTabContext;
     const combinedRef = useCallback((node: HTMLLIElement) => {
       tabRef(node);
       if (typeof outsideTabRef === "function") {
@@ -29,9 +38,9 @@ export const Tab = forwardRef(
     const id = useId().replace(/:/g, "");
     const tabId = tabPrefix + id;
     const isSelected = tabId === selectedTabId;
-    const isAnchor = "link" in props && typeof props.link === "string";
 
-    const onClick = () => {
+    const onClick = (e: MouseEvent) => {
+      e.preventDefault();
       changeTab(tabId);
     };
 
@@ -50,7 +59,7 @@ export const Tab = forwardRef(
         role="tab"
         tabIndex={isSelected ? 0 : -1}
       >
-        {isAnchor ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
+        {"link" in props ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
       </li>
     );
   }
