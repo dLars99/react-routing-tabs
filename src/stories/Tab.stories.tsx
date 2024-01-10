@@ -32,7 +32,7 @@ export const NoLink: Story = {
 export const Link: Story = {
   args: {
     label: "Hi",
-    link: "./",
+    link: "hi",
     isNav: false,
     tabIndex: 0,
   },
@@ -46,7 +46,7 @@ export const Link: Story = {
 export const NavLink: Story = {
   args: {
     label: "Hi",
-    link: "./",
+    link: "hi",
     isNav: true,
     tabIndex: 0,
   },

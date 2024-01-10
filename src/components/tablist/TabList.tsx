@@ -24,7 +24,7 @@ export interface TabListProps extends ComponentPropsWithRef<"ul"> {
   selectionMethod?: "automatic" | "manual";
   /**
    * If using auto-generated tabs from a config or data, any other children show before the tabs by default.
-   * Should the children show after instead?
+   * Should the children show after the tabs instead?
    */
   showChildrenAfterTabs?: boolean;
 }
@@ -53,8 +53,7 @@ export const TabList = forwardRef(
       console.error(tabListContextError);
       throw new Error(tabListContextError);
     }
-    const { changeTab, childTabs, config, data, tabLabelKey, tabRoutes } =
-      tabContext;
+    const { changeTab, childTabs } = tabContext;
 
     const getKey = useKeyboardNavigation(orientation, childTabs);
 

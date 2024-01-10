@@ -43,8 +43,10 @@ export const Tab = forwardRef(
     const isAnchor = "link" in props && typeof props.link === "string";
 
     const onClick = (e: MouseEvent) => {
-      e.preventDefault();
-      changeTab(tabId);
+      if (!props.disabled) {
+        e.preventDefault();
+        changeTab(tabId);
+      }
     };
 
     return (
@@ -53,7 +55,8 @@ export const Tab = forwardRef(
         aria-selected={isSelected}
         className={classNames(
           "tab",
-          { active: isSelected },
+          { tab__active: isSelected },
+          { tab__disabled: props.disabled },
           props.className ? { [props.className]: props.className } : ""
         )}
         id={tabId}
