@@ -2,7 +2,6 @@ import React, {
   PropsWithChildren,
   createContext,
   useCallback,
-  useContext,
   useEffect,
   useState,
 } from "react";
@@ -59,21 +58,14 @@ export const RoutingTabs = <T,>(
     const pathSegments = location.pathname.split(
       props.useHashRouting ? "#" : "/"
     );
-    const finalPathSegment = pathSegments[pathSegments.length - 1];
+    // Go with 2nd-to-last segment if there's a trailing slash
+    const finalPathSegment =
+      pathSegments[pathSegments.length - 1] ||
+      pathSegments[pathSegments.length - 2];
+
     if (!tabRoutes.includes(finalPathSegment)) {
       // no tab in route - go to selected tab
-      const selectedIndex = childTabs.findIndex(
-        (childTab) => childTab.id === selectedTabId
-      );
-      if (selectedIndex === -1) {
-        setSelectedTabId(childTabs[0]?.id);
-      }
-      navigate(
-        getNewLocation(tabRoutes[selectedIndex > -1 ? selectedIndex : 0]),
-        {
-          replace: true,
-        }
-      );
+      changeRouteFromId(selectedTabId, true);
     } else {
       // make sure our index matches the tab in the route
       const pathRouteIndex = tabRoutes.findIndex(
@@ -95,10 +87,12 @@ export const RoutingTabs = <T,>(
   );
 
   const changeRouteFromId = useCallback(
-    (id: string): void => {
-      const newRouteIndex =
-        childTabs.findIndex((childTab) => childTab.id === id) ?? 0;
-      navigate(getNewLocation(tabRoutes[newRouteIndex]));
+    (id: string, replace = false): void => {
+      const foundTabIndex = childTabs.findIndex(
+        (childTab) => childTab.id === id
+      );
+      const newRouteIndex = foundTabIndex > -1 ? foundTabIndex : 0;
+      navigate(getNewLocation(tabRoutes[newRouteIndex]), { replace });
     },
     [childTabs, getNewLocation, navigate]
   );
@@ -109,9 +103,12 @@ export const RoutingTabs = <T,>(
         changeTab,
         changeRoute: changeRouteFromId,
         childTabs,
+        config: props.config,
         data: props.data,
         selectedTabId,
+        tabLabelKey: props.tabLabelKey,
         tabRef: assignChildTab,
+        tabRoutes,
         useHashRouting: props.useHashRouting,
       }}
     >

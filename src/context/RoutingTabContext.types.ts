@@ -72,8 +72,11 @@ export type RoutingTabContextValue<T> = {
   changeRoute: (toPath: string) => void;
   changeTab: (id: string) => void;
   childTabs: HTMLLIElement[];
+  config: RoutingTabsConfig[] | undefined;
   data: T[] | undefined;
   selectedTabId: string;
+  tabLabelKey: keyof T | undefined;
   tabRef: (node: HTMLLIElement) => void;
+  tabRoutes: string[];
   useHashRouting: boolean | undefined;
 } | null;
