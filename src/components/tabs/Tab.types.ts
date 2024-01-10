@@ -13,10 +13,6 @@ interface TabBaseProps extends ComponentPropsWithRef<"li"> {
    * Display text for the tab
    */
   label: string;
-  /**
-   * Index for the tab within the tablist
-   */
-  tabIndex?: number;
 }
 
 export interface ButtonTabProps extends TabBaseProps {}

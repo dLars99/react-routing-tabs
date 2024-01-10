@@ -2,9 +2,10 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { RoutingTabs, useRoutingTabs } from "./RoutingTabContext";
+import { RoutingTabs } from "./RoutingTabContext";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { TabList } from "../components/tablist";
+import { useRoutingTabs } from "./hooks";
 
 enableFetchMocks();
 
@@ -13,13 +14,18 @@ const TestConsumer = () => {
   if (!routingTabContext)
     throw new Error("Consumer must be wrapped in RoutingTabs");
 
-  const { changeTab, selectedTabIndex } = routingTabContext;
-
+  const { changeTab, selectedTabId } = routingTabContext;
   return (
     <TabList>
-      <p>Howdy!</p>
-      <p>{selectedTabIndex}</p>
-      <button onClick={() => changeTab("1")}>Increase tab</button>
+      <p id="0" role="tab">
+        Howdy!
+      </p>
+      <p id="1" role="tab">
+        {selectedTabId}
+      </p>
+      <div role="Tab" id="2">
+        <button onClick={() => changeTab("1")}>Increase tab</button>
+      </div>
     </TabList>
   );
 };

@@ -79,7 +79,7 @@ export const RoutingTabs = <T,>(
       const pathRouteIndex = tabRoutes.findIndex(
         (tabRoute) => tabRoute === finalPathSegment
       );
-      const pathRouteId = childTabs[pathRouteIndex].id;
+      const pathRouteId = childTabs[pathRouteIndex]?.id;
       if (pathRouteId && selectedTabId !== pathRouteId) {
         setSelectedTabId(pathRouteId);
       }

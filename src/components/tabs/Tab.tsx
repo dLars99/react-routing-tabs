@@ -38,6 +38,9 @@ export const Tab = forwardRef(
     const id = useId().replace(/:/g, "");
     const tabId = tabPrefix + id;
     const isSelected = tabId === selectedTabId;
+    // This looks redundant, but satisifes a possible undefined link coming through
+    // in some dynamic scenarios
+    const isAnchor = "link" in props && typeof props.link === "string";
 
     const onClick = (e: MouseEvent) => {
       e.preventDefault();
@@ -59,7 +62,7 @@ export const Tab = forwardRef(
         role="tab"
         tabIndex={isSelected ? 0 : -1}
       >
-        {"link" in props ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
+        {isAnchor ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
       </li>
     );
   }

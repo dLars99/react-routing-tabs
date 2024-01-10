@@ -5,6 +5,9 @@ import { RoutingTabs } from "../../context";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Tab } from "./Tab";
 import { TabList } from "../tablist";
+import { enableFetchMocks } from "jest-fetch-mock";
+
+enableFetchMocks();
 
 const FullTestComponent = ({
   children,
@@ -15,7 +18,7 @@ const FullTestComponent = ({
 }) => (
   <RoutingTabs>
     <TabList>
-      <Tab label="tab1" link={link} tabIndex={0}>
+      <Tab label="tab1" link={link}>
         {children}
       </Tab>
     </TabList>
