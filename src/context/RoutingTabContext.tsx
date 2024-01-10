@@ -112,15 +112,13 @@ export const RoutingTabs = <T,>(
         data: props.data,
         selectedTabId,
         tabRef: assignChildTab,
+        useHashRouting: props.useHashRouting,
       }}
     >
       {props.children}
     </RoutingTabContext.Provider>
   );
 };
-
-export const useRoutingTabs = <T,>() =>
-  useContext<RoutingTabContextValue<T>>(RoutingTabContext);
 
 // We might want both config AND data
 // If so, add a 'useDataRoutes' prop (in options? config?) to use values from data

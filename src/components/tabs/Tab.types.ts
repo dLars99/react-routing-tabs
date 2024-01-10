@@ -6,6 +6,10 @@ interface TabBaseProps extends ComponentPropsWithRef<"li"> {
    */
   children?: ReactNode;
   /**
+   * Condition to disable the tab
+   */
+  disabled?: boolean;
+  /**
    * Display text for the tab
    */
   label: string;

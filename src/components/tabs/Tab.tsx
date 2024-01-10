@@ -5,13 +5,13 @@ import React, {
   useCallback,
   useId,
 } from "react";
-import { useRoutingTabs } from "../../context";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
 import { ButtonTab } from "./ButtonTab";
 import { TabProps } from "./Tab.types";
 import classNames from "classnames";
 import { panelPrefix, tabPrefix } from "../../utils";
+import { useRoutingTabs } from "../../context";
 
 /**
  * Component for an individual tab within the tab list
