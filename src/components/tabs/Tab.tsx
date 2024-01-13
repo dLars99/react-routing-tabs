@@ -15,6 +15,9 @@ import { useRoutingTabs } from "../../context";
 
 /**
  * Component for an individual tab within the tab list
+ * Renders as a `li` tag and accepts an optional ref from the user
+ * Inside the `li` tag, an `a` or a `button` will render, depending on whether or not a link
+ * prop is provided
  */
 export const Tab = forwardRef(
   (props: TabProps, outsideTabRef?: ForwardedRef<HTMLLIElement>) => {

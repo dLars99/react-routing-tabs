@@ -20,7 +20,6 @@ type Story = StoryObj<typeof meta>;
 export const NoLink: Story = {
   args: {
     label: "Hi",
-    tabIndex: 0,
   },
   render: ({ ...args }) => (
     <RoutingTabs>
@@ -34,7 +33,6 @@ export const Link: Story = {
     label: "Hi",
     link: "hi",
     isNav: false,
-    tabIndex: 0,
   },
   render: ({ ...args }) => (
     <RoutingTabs>
@@ -48,11 +46,33 @@ export const NavLink: Story = {
     label: "Hi",
     link: "hi",
     isNav: true,
-    tabIndex: 0,
   },
   render: ({ ...args }) => (
     <RoutingTabs>
       <Tab {...args} />
+    </RoutingTabs>
+  ),
+};
+
+export const WithChildren: Story = {
+  args: {
+    label: "Hi",
+  },
+  render: ({ ...args }) => (
+    <RoutingTabs>
+      <Tab {...args}>
+        <div style={{ alignItems: "center", display: "flex", gap: "1rem" }}>
+          <div
+            style={{
+              borderRadius: "50%",
+              backgroundColor: "blue",
+              height: "2rem",
+              width: "2rem",
+            }}
+          />
+          <h3>This is custom content</h3>
+        </div>
+      </Tab>
     </RoutingTabs>
   ),
 };
