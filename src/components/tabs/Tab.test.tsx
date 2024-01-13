@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { RoutingTabs } from "../../context";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
@@ -98,5 +98,16 @@ describe("Tab", () => {
 
     await screen.findByText("tab1");
     expect(screen.getByText("tab1")).toBeInTheDocument();
+  });
+
+  it("should navigate to the correct route when clicked", async () => {
+    const router = createMemoryRouter(defaultTestRoutes, {
+      initialEntries: ["/tab-0"],
+    });
+    render(<RouterProvider router={router} />);
+
+    await screen.findByRole("link");
+    fireEvent.click(screen.getByRole("link"));
+    expect(router.state.location.pathname).toContain("tab2");
   });
 });

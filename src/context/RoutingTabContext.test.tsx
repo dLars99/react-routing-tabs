@@ -6,6 +6,7 @@ import { RoutingTabs } from "./RoutingTabContext";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { TabList } from "../components/tablist";
 import { useRoutingTabs } from "./hooks";
+import { RoutingTabsConfig } from "./RoutingTabContext.types";
 
 enableFetchMocks();
 
@@ -51,7 +52,11 @@ const brokenConfig = [
   },
 ];
 
-const TestConfigComponent = ({ config }: { config: any }): JSX.Element => {
+const TestConfigComponent = ({
+  config,
+}: {
+  config: RoutingTabsConfig[];
+}): JSX.Element => {
   return (
     <RoutingTabs config={config}>
       <TestConsumer />
@@ -69,6 +74,7 @@ const configRoutes = [
 const brokenConfigRoutes = [
   {
     path: "*",
+    // @ts-expect-error intentionally incorrect config
     element: <TestConfigComponent config={brokenConfig} />,
   },
 ];
@@ -161,13 +167,13 @@ describe("RoutingTabs", () => {
     });
     render(<RouterProvider router={router} />);
 
-    await screen.findByText("0");
+    await screen.findByText("Tab 1");
 
-    expect(screen.getByText("0")).toBeInTheDocument();
+    expect(screen.getByText("Tab 1")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button"));
-    await screen.findByText("1");
-    expect(screen.getByText("1")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Tab 1"));
+    await screen.findByText(/rrtTab/);
+    expect(screen.getByText(/rrtTab/)).toBeInTheDocument();
     expect(router.state.location.pathname).toContain("tab-1");
   });
 });
@@ -209,8 +215,10 @@ it("should append to duplicate route keys", async () => {
   render(<RouterProvider router={router} />);
 
   fireEvent.click(screen.getByRole("button"));
-  await screen.findByText("1");
-  expect(screen.getByText("1")).toBeInTheDocument();
+  await screen.findAllByText("Mike");
+  expect(screen.getAllByText("Mike")[1]).toBeInTheDocument();
+  fireEvent.click(screen.getAllByText("Mike")[1]);
+  await screen.findByText(/rrtTab/);
   expect(router.state.location.pathname).toContain("mike-1");
 });
 
@@ -227,8 +235,8 @@ it("should select the current tab from the url if one is provided", async () => 
   });
   render(<RouterProvider router={router} />);
 
-  await screen.findByText("1");
-  expect(screen.getByText("1")).toBeInTheDocument();
+  await screen.findByText("Tab 1");
+  expect(screen.getByText("Tab 1")).toBeInTheDocument();
 });
 
 it("should throw an error if a config item is missing required properties", async () => {

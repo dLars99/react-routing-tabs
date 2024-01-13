@@ -13,7 +13,11 @@ export const ConfigTabs: FC<ConfigTabsProps> = ({}) => {
 
   return config && config.length
     ? config.map((configItem) => (
-        <Tab label={configItem.name} link={configItem.route} />
+        <Tab
+          key={configItem.route}
+          label={configItem.name}
+          link={configItem.route}
+        />
       ))
     : null;
 };
