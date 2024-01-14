@@ -76,18 +76,18 @@ describe("Tab", () => {
     });
     render(<RouterProvider router={router} />);
 
-    await screen.findByRole("link");
-    expect(screen.getByRole("link")).toBeInTheDocument();
+    await screen.findByRole("tab");
+    expect(screen.getByRole("tab")).toHaveAttribute("href");
   });
 
-  it("should render a button when no link is provided", async () => {
+  it("should render an empty anchor when no link is provided", async () => {
     const router = createMemoryRouter(linklessTestRoutes, {
       initialEntries: ["/tab-0"],
     });
     render(<RouterProvider router={router} />);
 
-    await screen.findByRole("button");
-    expect(screen.getByRole("button")).toBeInTheDocument();
+    await screen.findByRole("tab");
+    expect(screen.getByRole("tab")).toHaveAttribute("href", "/.");
   });
 
   it("should render the label when no children are provided", async () => {
@@ -106,8 +106,8 @@ describe("Tab", () => {
     });
     render(<RouterProvider router={router} />);
 
-    await screen.findByRole("link");
-    fireEvent.click(screen.getByRole("link"));
+    await screen.findByRole("tab");
+    fireEvent.click(screen.getByRole("tab"));
     expect(router.state.location.pathname).toContain("tab2");
   });
 });

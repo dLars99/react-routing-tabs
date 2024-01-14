@@ -4,7 +4,7 @@ import { mapChildRoutes, mapConfigRoutes, mapDataRoutes } from "./helpers";
 
 export const useTabRoutes = <T>(
   { config, data, tabLabelKey }: PropsWithChildren<RoutingTabsProps<T>>,
-  childTabs: (HTMLAnchorElement | HTMLButtonElement)[]
+  childTabs: HTMLAnchorElement[]
 ): string[] => {
   const tabRoutes = useMemo(() => {
     let mappedRoutes: string[] = [];

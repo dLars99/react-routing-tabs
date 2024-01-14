@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, NavLinkProps } from "react-router-dom";
 import { AnchorTabProps } from "./Tab.types";
 import { useRoutingTabs } from "../../context";
 import { panelPrefix } from "../../utils";
@@ -12,7 +12,7 @@ export const AnchorTab = ({
   isNav = false,
   isSelected,
   label,
-  link,
+  link = "/.",
   onClick,
   tabId,
 }: AnchorTabProps) => {
@@ -47,7 +47,7 @@ export const AnchorTab = ({
       ref={combinedRef}
       role="tab"
       tabIndex={isSelected ? 0 : -1}
-      to={disabled ? "" : parsedLink}
+      to={disabled ? "/." : parsedLink}
     >
       {children ?? label}
     </Link>

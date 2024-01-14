@@ -57,6 +57,7 @@ export const NavLink: Story = {
 export const WithChildren: Story = {
   args: {
     label: "Hi",
+    link: "hi",
   },
   render: ({ ...args }) => (
     <RoutingTabs>

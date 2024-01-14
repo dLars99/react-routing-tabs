@@ -24,18 +24,15 @@ export const RoutingTabs = <T,>(
   props: PropsWithChildren<RoutingTabsProps<T>>
 ): JSX.Element | null => {
   const [selectedTabId, setSelectedTabId] = useState<string>("");
-  const [childTabs, setChildTabs] = useState<
-    (HTMLAnchorElement | HTMLButtonElement)[]
-  >([]);
+  const [childTabs, setChildTabs] = useState<HTMLAnchorElement[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
   const tabRoutes = useTabRoutes(props, childTabs);
 
   const assignChildTab = useCallback(
-    (node: HTMLAnchorElement | HTMLButtonElement): void => {
+    (node: HTMLAnchorElement): void => {
       const childTabIndex = childTabs.findIndex(
-        (childTab: HTMLAnchorElement | HTMLButtonElement) =>
-          childTab?.id === node?.id
+        (childTab: HTMLAnchorElement) => childTab?.id === node?.id
       );
       if (node && childTabIndex === -1) {
         setChildTabs((currentTabs) => [...currentTabs, node]);

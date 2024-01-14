@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, MouseEvent, ReactNode } from "react";
 
-interface TabBaseProps {
+export interface TabProps extends ComponentPropsWithRef<"a"> {
   /**
    * Use children for custom content
    */
@@ -10,47 +10,23 @@ interface TabBaseProps {
    */
   disabled?: boolean;
   /**
-   * Display text for the tab
-   */
-  label: string;
-}
-
-export interface ButtonTabBaseProps
-  extends ComponentPropsWithRef<"button">,
-    TabBaseProps {}
-
-export interface AnchorTabBaseProps
-  extends ComponentPropsWithRef<"a">,
-    TabBaseProps {
-  /**
    * Is this part of a true nav component?
    */
   isNav?: boolean;
   /**
+   * Display text for the tab
+   */
+  label: string;
+  /**
    * Destination link for the tab
    */
-  link: string;
+  link?: string;
 }
 
-export type TabProps = ButtonTabBaseProps | AnchorTabBaseProps;
-
-export type ExtendedTabProps = {
+export interface AnchorTabProps extends TabProps {
+  combinedRef: (node: HTMLAnchorElement) => void;
   id: string;
   tabId: string;
   isSelected: boolean;
   onClick: (e: MouseEvent) => void;
-};
-
-export type AnchorCombinedRef = {
-  combinedRef: (node: HTMLAnchorElement) => void;
-};
-export type ButtonCombinedRef = {
-  combinedRef: (node: HTMLButtonElement) => void;
-};
-
-export type ButtonTabProps = ButtonTabBaseProps &
-  ExtendedTabProps &
-  ButtonCombinedRef;
-export type AnchorTabProps = AnchorTabBaseProps &
-  ExtendedTabProps &
-  AnchorCombinedRef;
+}

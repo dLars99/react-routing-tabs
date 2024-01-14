@@ -1,17 +1,12 @@
-export const mapChildRoutes = (
-  childTabs: (HTMLAnchorElement | HTMLButtonElement)[]
-): string[] => {
+export const mapChildRoutes = (childTabs: HTMLAnchorElement[]): string[] => {
   return childTabs.reduce(
     (
       childRoutes: string[],
-      childTab: HTMLAnchorElement | HTMLButtonElement
+      childTab: HTMLAnchorElement,
+      _,
+      allChildren: HTMLAnchorElement[]
     ) => {
-      const anchorChildren = Array.from(childTab.children).filter(
-        (child) => "href" in child
-      );
-      const hrefs = anchorChildren.map(
-        (anchor) => (anchor as HTMLAnchorElement).href
-      );
+      const hrefs = allChildren.map((anchor) => anchor.href);
       const fallbackRoute = hrefs.length === 0 ? [childTab.id] : [];
       const nextRoutes = [...childRoutes, ...hrefs, ...fallbackRoute];
       return nextRoutes;

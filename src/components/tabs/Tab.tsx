@@ -7,23 +7,18 @@ import React, {
 } from "react";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
-import { ButtonTab } from "./ButtonTab";
-import { AnchorCombinedRef, ButtonTabBaseProps, TabProps } from "./Tab.types";
+import { TabProps } from "./Tab.types";
 import classNames from "classnames";
-import { panelPrefix, tabPrefix } from "../../utils";
+import { tabPrefix } from "../../utils";
 import { useRoutingTabs } from "../../context";
 
 /**
  * Component for an individual tab within the tab list
  * Renders as a `li` tag and accepts an optional ref from the user
- * Inside the `li` tag, an `a` or a `button` will render, depending on whether or not a link
- * prop is provided
+ * Inside the `li` tag, an `a` will render to provide the routing for the tab
  */
 export const Tab = forwardRef(
-  (
-    props: TabProps,
-    outsideTabRef?: ForwardedRef<HTMLAnchorElement | HTMLButtonElement>
-  ) => {
+  (props: TabProps, outsideTabRef?: ForwardedRef<HTMLAnchorElement>) => {
     const tabContextError = "Tab must be wrapped in a RoutingTabs component";
     const routingTabContext = useRoutingTabs();
     if (!routingTabContext) {
@@ -32,17 +27,14 @@ export const Tab = forwardRef(
     }
 
     const { changeTab, selectedTabId, tabRef } = routingTabContext;
-    const combinedRef = useCallback(
-      (node: HTMLAnchorElement | HTMLButtonElement) => {
-        tabRef(node);
-        if (typeof outsideTabRef === "function") {
-          outsideTabRef(node);
-        } else if (outsideTabRef) {
-          outsideTabRef.current = node;
-        }
-      },
-      []
-    );
+    const combinedRef = useCallback((node: HTMLAnchorElement) => {
+      tabRef(node);
+      if (typeof outsideTabRef === "function") {
+        outsideTabRef(node);
+      } else if (outsideTabRef) {
+        outsideTabRef.current = node;
+      }
+    }, []);
 
     const id = useId().replace(/:/g, "");
     const tabId = tabPrefix + id;
@@ -63,10 +55,6 @@ export const Tab = forwardRef(
       onClick,
     };
 
-    // This looks redundant, but satisifes a possible undefined link coming through
-    // in some dynamic scenarios
-    const isAnchor = "link" in props && typeof props.link === "string";
-
     return (
       <li
         className={classNames(
@@ -77,11 +65,7 @@ export const Tab = forwardRef(
         )}
         role="presentation"
       >
-        {isAnchor ? (
-          <AnchorTab {...props} {...extendedProps} />
-        ) : (
-          <ButtonTab {...(props as ButtonTabBaseProps)} {...extendedProps} />
-        )}
+        <AnchorTab {...props} {...extendedProps} />
       </li>
     );
   }
