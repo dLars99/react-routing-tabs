@@ -41,8 +41,8 @@ export const Tab = forwardRef(
     const isSelected = tabId === selectedTabId;
 
     const onClick = (e: MouseEvent) => {
-      if (!props.disabled) {
-        e.preventDefault();
+      e.preventDefault();
+      if (isSelected || !props.disabled) {
         changeTab(tabId);
       }
     };

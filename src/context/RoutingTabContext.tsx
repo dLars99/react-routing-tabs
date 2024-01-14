@@ -52,7 +52,7 @@ export const RoutingTabs = <T,>(
     [location, props.useHashRouting]
   );
 
-  // Get initial index from route
+  // Get initial tab id from route
   useEffect(() => {
     if (tabRoutes.length < 1 || !location.pathname) return;
     const pathSegments = location.pathname.split(
