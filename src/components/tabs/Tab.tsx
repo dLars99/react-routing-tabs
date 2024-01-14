@@ -8,7 +8,7 @@ import React, {
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
 import { ButtonTab } from "./ButtonTab";
-import { TabProps } from "./Tab.types";
+import { AnchorCombinedRef, ButtonTabBaseProps, TabProps } from "./Tab.types";
 import classNames from "classnames";
 import { panelPrefix, tabPrefix } from "../../utils";
 import { useRoutingTabs } from "../../context";
@@ -20,7 +20,10 @@ import { useRoutingTabs } from "../../context";
  * prop is provided
  */
 export const Tab = forwardRef(
-  (props: TabProps, outsideTabRef?: ForwardedRef<HTMLLIElement>) => {
+  (
+    props: TabProps,
+    outsideTabRef?: ForwardedRef<HTMLAnchorElement | HTMLButtonElement>
+  ) => {
     const tabContextError = "Tab must be wrapped in a RoutingTabs component";
     const routingTabContext = useRoutingTabs();
     if (!routingTabContext) {
@@ -29,21 +32,21 @@ export const Tab = forwardRef(
     }
 
     const { changeTab, selectedTabId, tabRef } = routingTabContext;
-    const combinedRef = useCallback((node: HTMLLIElement) => {
-      tabRef(node);
-      if (typeof outsideTabRef === "function") {
-        outsideTabRef(node);
-      } else if (outsideTabRef) {
-        outsideTabRef.current = node;
-      }
-    }, []);
+    const combinedRef = useCallback(
+      (node: HTMLAnchorElement | HTMLButtonElement) => {
+        tabRef(node);
+        if (typeof outsideTabRef === "function") {
+          outsideTabRef(node);
+        } else if (outsideTabRef) {
+          outsideTabRef.current = node;
+        }
+      },
+      []
+    );
 
     const id = useId().replace(/:/g, "");
     const tabId = tabPrefix + id;
     const isSelected = tabId === selectedTabId;
-    // This looks redundant, but satisifes a possible undefined link coming through
-    // in some dynamic scenarios
-    const isAnchor = "link" in props && typeof props.link === "string";
 
     const onClick = (e: MouseEvent) => {
       if (!props.disabled) {
@@ -52,23 +55,33 @@ export const Tab = forwardRef(
       }
     };
 
+    const extendedProps = {
+      combinedRef,
+      id,
+      tabId,
+      isSelected,
+      onClick,
+    };
+
+    // This looks redundant, but satisifes a possible undefined link coming through
+    // in some dynamic scenarios
+    const isAnchor = "link" in props && typeof props.link === "string";
+
     return (
       <li
-        aria-controls={panelPrefix + id}
-        aria-selected={isSelected}
         className={classNames(
           "tab",
           { tab__active: isSelected },
           { tab__disabled: props.disabled },
           props.className ? { [props.className]: props.className } : ""
         )}
-        id={tabId}
-        onClick={onClick}
-        ref={combinedRef}
-        role="tab"
-        tabIndex={isSelected ? 0 : -1}
+        role="presentation"
       >
-        {isAnchor ? <AnchorTab {...props} /> : <ButtonTab {...props} />}
+        {isAnchor ? (
+          <AnchorTab {...props} {...extendedProps} />
+        ) : (
+          <ButtonTab {...(props as ButtonTabBaseProps)} {...extendedProps} />
+        )}
       </li>
     );
   }

@@ -1,6 +1,6 @@
-import { ComponentPropsWithRef, ReactNode } from "react";
+import { ComponentPropsWithRef, MouseEvent, ReactNode } from "react";
 
-interface TabBaseProps extends ComponentPropsWithRef<"li"> {
+interface TabBaseProps {
   /**
    * Use children for custom content
    */
@@ -15,9 +15,13 @@ interface TabBaseProps extends ComponentPropsWithRef<"li"> {
   label: string;
 }
 
-export interface ButtonTabProps extends TabBaseProps {}
+export interface ButtonTabBaseProps
+  extends ComponentPropsWithRef<"button">,
+    TabBaseProps {}
 
-export interface AnchorTabProps extends TabBaseProps {
+export interface AnchorTabBaseProps
+  extends ComponentPropsWithRef<"a">,
+    TabBaseProps {
   /**
    * Is this part of a true nav component?
    */
@@ -28,4 +32,25 @@ export interface AnchorTabProps extends TabBaseProps {
   link: string;
 }
 
-export type TabProps = ButtonTabProps | AnchorTabProps;
+export type TabProps = ButtonTabBaseProps | AnchorTabBaseProps;
+
+export type ExtendedTabProps = {
+  id: string;
+  tabId: string;
+  isSelected: boolean;
+  onClick: (e: MouseEvent) => void;
+};
+
+export type AnchorCombinedRef = {
+  combinedRef: (node: HTMLAnchorElement) => void;
+};
+export type ButtonCombinedRef = {
+  combinedRef: (node: HTMLButtonElement) => void;
+};
+
+export type ButtonTabProps = ButtonTabBaseProps &
+  ExtendedTabProps &
+  ButtonCombinedRef;
+export type AnchorTabProps = AnchorTabBaseProps &
+  ExtendedTabProps &
+  AnchorCombinedRef;
