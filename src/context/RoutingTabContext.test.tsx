@@ -7,6 +7,7 @@ import { enableFetchMocks } from "jest-fetch-mock";
 import { TabList } from "../components/tablist";
 import { useRoutingTabs } from "./hooks";
 import { RoutingTabsConfig } from "./RoutingTabContext.types";
+import { tabPrefix } from "../utils";
 
 enableFetchMocks();
 
@@ -150,6 +151,8 @@ const defaultRoutes = [
   },
 ];
 
+const tabPrefixMatch = new RegExp(tabPrefix);
+
 describe("RoutingTabs", () => {
   it("should render and display children", async () => {
     const router = createMemoryRouter(configRoutes, {
@@ -172,8 +175,8 @@ describe("RoutingTabs", () => {
     expect(screen.getByText("Tab 1")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Tab 1"));
-    await screen.findByText(/rrtTab/);
-    expect(screen.getByText(/rrtTab/)).toBeInTheDocument();
+    await screen.findByText(tabPrefixMatch);
+    expect(screen.getByText(tabPrefixMatch)).toBeInTheDocument();
     expect(router.state.location.pathname).toContain("tab-1");
   });
 });
@@ -218,7 +221,7 @@ it("should append to duplicate route keys", async () => {
   await screen.findAllByText("Mike");
   expect(screen.getAllByText("Mike")[1]).toBeInTheDocument();
   fireEvent.click(screen.getAllByText("Mike")[1]);
-  await screen.findByText(/rrtTab/);
+  await screen.findByText(tabPrefixMatch);
   expect(router.state.location.pathname).toContain("mike-1");
 });
 

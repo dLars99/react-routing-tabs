@@ -35,7 +35,7 @@ const getPreviousAvailableTab = (
 export const useKeyboardNavigation =
   (
     orientation: "horizontal" | "vertical",
-    childTabs: HTMLLIElement[]
+    childTabs: HTMLAnchorElement[]
   ): GetNewIndexFromKey =>
   (key, currentIndex) => {
     const childTabElements = childTabs;

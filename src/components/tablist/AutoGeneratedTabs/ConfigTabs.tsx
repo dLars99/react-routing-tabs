@@ -1,10 +1,8 @@
-import React, { FC } from "react";
+import React from "react";
 import { Tab } from "../../tabs";
 import { useRoutingTabs } from "../../../context";
 
-export interface ConfigTabsProps {}
-
-export const ConfigTabs: FC<ConfigTabsProps> = ({}) => {
+export const ConfigTabs = () => {
   const tabContext = useRoutingTabs();
   if (!tabContext) {
     return null;
