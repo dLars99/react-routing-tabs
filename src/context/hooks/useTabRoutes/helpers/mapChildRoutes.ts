@@ -1,9 +1,10 @@
-import { MutableRefObject } from "react";
-
-export const mapChildRoutes = (
-  childTabs: MutableRefObject<HTMLLIElement[]>
-): string[] => {
-  return childTabs.current.map(
-    (child: HTMLLIElement, index: number) => `tab-${index + 1}`
+export const mapChildRoutes = (childTabs: HTMLAnchorElement[]): string[] => {
+  return childTabs.reduce(
+    (childRoutes: string[], childTab: HTMLAnchorElement) => {
+      const href = childTab.href || childTab.id;
+      const nextRoutes = [...childRoutes, href];
+      return nextRoutes;
+    },
+    []
   );
 };

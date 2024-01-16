@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TabList } from "../components";
+import { Tab, TabList } from "../components";
 import { RoutingTabs } from "../context";
 
 const meta = {
@@ -43,9 +43,9 @@ export const Horizontal: Story = {
   },
   render: (args) => (
     <TabList {...args}>
-      <li>Thing 1</li>
-      <li>Thing 2</li>
-      <li>Thing 3</li>
+      <Tab label="Thing 1">Thing 1</Tab>
+      <Tab label="Thing 2">Thing 2</Tab>
+      <Tab label="Thing 3">Thing 3</Tab>
     </TabList>
   ),
 };
@@ -56,9 +56,9 @@ export const Vertical: Story = {
   },
   render: (args) => (
     <TabList {...args}>
-      <li>Thing 1</li>
-      <li>Thing 2</li>
-      <li>Thing 3</li>
+      <Tab label="Thing 1">Thing 1</Tab>
+      <Tab label="Thing 2">Thing 2</Tab>
+      <Tab label="Thing 3">Thing 3</Tab>
     </TabList>
   ),
 };

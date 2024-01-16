@@ -4,7 +4,7 @@ import { mapChildRoutes, mapConfigRoutes, mapDataRoutes } from "./helpers";
 
 export const useTabRoutes = <T>(
   { config, data, tabLabelKey }: PropsWithChildren<RoutingTabsProps<T>>,
-  childTabs: MutableRefObject<HTMLLIElement[]>
+  childTabs: HTMLAnchorElement[]
 ): string[] => {
   const tabRoutes = useMemo(() => {
     let mappedRoutes: string[] = [];
@@ -17,7 +17,7 @@ export const useTabRoutes = <T>(
     }
 
     return mappedRoutes.length > 0 ? mappedRoutes : mapChildRoutes(childTabs);
-  }, [config, data]);
+  }, [childTabs, config, data]);
 
   return tabRoutes;
 };

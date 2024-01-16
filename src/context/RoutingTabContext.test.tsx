@@ -2,9 +2,12 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { RoutingTabs, useRoutingTabs } from "./RoutingTabContext";
+import { RoutingTabs } from "./RoutingTabContext";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { TabList } from "../components/tablist";
+import { useRoutingTabs } from "./hooks";
+import { RoutingTabsConfig } from "./RoutingTabContext.types";
+import { tabPrefix } from "../utils";
 
 enableFetchMocks();
 
@@ -13,13 +16,18 @@ const TestConsumer = () => {
   if (!routingTabContext)
     throw new Error("Consumer must be wrapped in RoutingTabs");
 
-  const { changeTab, selectedTabIndex } = routingTabContext;
-
+  const { changeTab, selectedTabId } = routingTabContext;
   return (
     <TabList>
-      <p>Howdy!</p>
-      <p>{selectedTabIndex}</p>
-      <button onClick={() => changeTab(1)}>Increase tab</button>
+      <p id="0" role="tab">
+        Howdy!
+      </p>
+      <p id="1" role="tab">
+        {selectedTabId}
+      </p>
+      <div role="Tab" id="2">
+        <button onClick={() => changeTab("1")}>Increase tab</button>
+      </div>
     </TabList>
   );
 };
@@ -45,7 +53,11 @@ const brokenConfig = [
   },
 ];
 
-const TestConfigComponent = ({ config }: { config: any }): JSX.Element => {
+const TestConfigComponent = ({
+  config,
+}: {
+  config: RoutingTabsConfig[];
+}): JSX.Element => {
   return (
     <RoutingTabs config={config}>
       <TestConsumer />
@@ -63,6 +75,7 @@ const configRoutes = [
 const brokenConfigRoutes = [
   {
     path: "*",
+    // @ts-expect-error intentionally incorrect config
     element: <TestConfigComponent config={brokenConfig} />,
   },
 ];
@@ -138,6 +151,8 @@ const defaultRoutes = [
   },
 ];
 
+const tabPrefixMatch = new RegExp(tabPrefix);
+
 describe("RoutingTabs", () => {
   it("should render and display children", async () => {
     const router = createMemoryRouter(configRoutes, {
@@ -155,13 +170,13 @@ describe("RoutingTabs", () => {
     });
     render(<RouterProvider router={router} />);
 
-    await screen.findByText("0");
+    await screen.findByText("Tab 1");
 
-    expect(screen.getByText("0")).toBeInTheDocument();
+    expect(screen.getByText("Tab 1")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button"));
-    await screen.findByText("1");
-    expect(screen.getByText("1")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Tab 1"));
+    await screen.findByText(tabPrefixMatch);
+    expect(screen.getByText(tabPrefixMatch)).toBeInTheDocument();
     expect(router.state.location.pathname).toContain("tab-1");
   });
 });
@@ -203,8 +218,10 @@ it("should append to duplicate route keys", async () => {
   render(<RouterProvider router={router} />);
 
   fireEvent.click(screen.getByRole("button"));
-  await screen.findByText("1");
-  expect(screen.getByText("1")).toBeInTheDocument();
+  await screen.findAllByText("Mike");
+  expect(screen.getAllByText("Mike")[1]).toBeInTheDocument();
+  fireEvent.click(screen.getAllByText("Mike")[1]);
+  await screen.findByText(tabPrefixMatch);
   expect(router.state.location.pathname).toContain("mike-1");
 });
 
@@ -221,8 +238,8 @@ it("should select the current tab from the url if one is provided", async () => 
   });
   render(<RouterProvider router={router} />);
 
-  await screen.findByText("1");
-  expect(screen.getByText("1")).toBeInTheDocument();
+  await screen.findByText("Tab 1");
+  expect(screen.getByText("Tab 1")).toBeInTheDocument();
 });
 
 it("should throw an error if a config item is missing required properties", async () => {

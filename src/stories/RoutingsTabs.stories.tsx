@@ -21,7 +21,7 @@ export const Default: Story = {
   render: () => (
     <RoutingTabs>
       <TabList>
-        <Tab />
+        <Tab label="Tab" />
       </TabList>
     </RoutingTabs>
   ),
@@ -43,9 +43,7 @@ export const Config: Story = {
   },
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
-      <TabList>
-        <Tab />
-      </TabList>
+      <TabList />
     </RoutingTabs>
   ),
 };
@@ -67,9 +65,7 @@ export const Data: Story = {
   },
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
-      <TabList>
-        <Tab />
-      </TabList>
+      <TabList />
     </RoutingTabs>
   ),
 };
