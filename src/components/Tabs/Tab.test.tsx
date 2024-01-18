@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { RoutingTabs } from "../../context";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Tab } from "./Tab";
-import { TabList } from "../tablist";
+import { TabList } from "../Tablist";
 import { enableFetchMocks } from "jest-fetch-mock";
 
 enableFetchMocks();
