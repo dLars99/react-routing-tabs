@@ -1,6 +1,6 @@
 import React from "react";
 import { useRoutingTabs } from "../../../context";
-import { Tab } from "../../tabs";
+import { Tab } from "../../Tabs";
 
 export const DataTabs = <T,>() => {
   const tabContext = useRoutingTabs<T>();

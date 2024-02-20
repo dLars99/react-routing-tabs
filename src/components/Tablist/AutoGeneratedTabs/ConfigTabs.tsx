@@ -1,5 +1,5 @@
 import React from "react";
-import { Tab } from "../../tabs";
+import { Tab } from "../../Tabs";
 import { useRoutingTabs } from "../../../context";
 
 export const ConfigTabs = () => {

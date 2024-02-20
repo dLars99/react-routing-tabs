@@ -1,2 +1,2 @@
-export * from "./tablist";
-export * from "./tabs";
+export * from "./Tablist";
+export * from "./Tabs";
