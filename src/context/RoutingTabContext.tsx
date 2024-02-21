@@ -92,7 +92,12 @@ export const RoutingTabs = <T,>(
         (childTab) => childTab.id === id
       );
       const newRouteIndex = foundTabIndex > -1 ? foundTabIndex : 0;
-      navigate(getNewLocation(tabRoutes[newRouteIndex]), { replace });
+      navigate(getNewLocation(tabRoutes[newRouteIndex]), {
+        replace,
+        state: {
+          rrtId: id,
+        },
+      });
     },
     [childTabs, getNewLocation, navigate]
   );
