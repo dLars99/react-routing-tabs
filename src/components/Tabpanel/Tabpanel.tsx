@@ -2,6 +2,7 @@ import React, {
   Children,
   ComponentProps,
   ForwardedRef,
+  PropsWithChildren,
   ReactNode,
   forwardRef,
   isValidElement,
@@ -10,29 +11,34 @@ import React, {
 import { useRoutingTabs } from "../../context";
 import { useLocation } from "react-router-dom";
 import { panelPrefix, tabPrefix } from "../../utils";
+import { useRouterError } from "../../utils/useRouterError";
+import { useContextError } from "../../utils/useContextError";
 
-export interface TabpanelProps extends ComponentProps<"div"> {
-  children: ReactNode;
-}
+export interface TabpanelProps extends ComponentProps<"div"> {}
 
 type ChildArray = Array<Exclude<ReactNode, boolean | null | undefined>>;
 
+const componentName = "Tabpanel";
+
 export const Tabpanel = forwardRef(
   (
-    { children, ...props }: TabpanelProps,
+    { children, ...props }: PropsWithChildren<TabpanelProps>,
     outsideTabPanelRef?: ForwardedRef<HTMLDivElement>
   ) => {
     const routingTabContext = useRoutingTabs();
-    const tabContextError =
-      "Tabpanels must be wrapped in a RoutingTabs component";
-    if (!routingTabContext) {
-      console.error(tabContextError);
-      throw new Error(tabContextError);
-    }
+    useContextError(componentName, routingTabContext);
+    useRouterError(componentName);
 
-    const {
-      state: { rrtId },
-    } = useLocation();
+    const location = useLocation();
+
+    const rrtId = location?.state?.rrtId;
+
+    if (!rrtId) {
+      // Don't crash, but make this known
+      console.warn(
+        "Unable to get panel id from router state. This may affect the accessibility of this page. To fix this, make sure your Tabs and Tabpanel are inside a react-router-dom Router component."
+      );
+    }
 
     // If there are no focusable children, the tabindex should be 0
     const hasFocusableChild = useMemo(() => {
