@@ -27,12 +27,9 @@ export const Tabpanel = forwardRef(
   ) => {
     const routingTabContext = useRoutingTabs();
     useContextError(componentName, routingTabContext);
-    useRouterError(componentName);
 
     const location = useLocation();
-
     const rrtId = location?.state?.rrtId;
-
     if (!rrtId) {
       // Don't crash, but make this known
       console.warn(
@@ -40,33 +37,13 @@ export const Tabpanel = forwardRef(
       );
     }
 
-    // If there are no focusable children, the tabindex should be 0
-    const hasFocusableChild = useMemo(() => {
-      const findFocusableChild = (
-        childArray: ChildArray
-      ): ReactNode | undefined =>
-        childArray.find((child) => {
-          if (isValidElement(child)) {
-            if ("focus" in child) {
-              return true;
-            } else if ("children" in child) {
-              const grandchildren = Children.toArray(child.children);
-              return findFocusableChild(grandchildren);
-            }
-          }
-          return false;
-        });
-      const iterableChildren = Children.toArray(children);
-      return !!findFocusableChild(iterableChildren);
-    }, [children]);
-
     return (
       <div
         aria-labelledby={tabPrefix + rrtId}
         id={panelPrefix + rrtId}
         ref={outsideTabPanelRef}
         role="tabpanel"
-        tabIndex={hasFocusableChild ? -1 : 0}
+        tabIndex={0}
         {...props}
       >
         {children}

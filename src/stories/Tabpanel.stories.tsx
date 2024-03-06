@@ -15,9 +15,7 @@ const meta = {
   decorators: [
     (Story) => (
       <RoutingTabs>
-        <Routes>
-          <Route path="/" element={<Story />} />
-        </Routes>
+        <Story />
       </RoutingTabs>
     ),
   ],
