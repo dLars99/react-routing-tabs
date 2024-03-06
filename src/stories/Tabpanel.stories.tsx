@@ -1,8 +1,9 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Tab, Tabpanel } from "../components";
+import { Tabpanel } from "../components";
 import { RoutingTabs } from "../context";
+import { Route, Routes } from "react-router-dom";
 
 const meta = {
   title: "Tabpanel",
@@ -14,7 +15,9 @@ const meta = {
   decorators: [
     (Story) => (
       <RoutingTabs>
-        <Story />
+        <Routes>
+          <Route path="/" element={<Story />} />
+        </Routes>
       </RoutingTabs>
     ),
   ],
