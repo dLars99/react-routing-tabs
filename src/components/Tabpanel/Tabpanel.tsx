@@ -1,22 +1,15 @@
 import React, {
-  Children,
   ComponentProps,
   ForwardedRef,
   PropsWithChildren,
-  ReactNode,
   forwardRef,
-  isValidElement,
-  useMemo,
 } from "react";
 import { useRoutingTabs } from "../../context";
 import { useLocation } from "react-router-dom";
 import { panelPrefix, tabPrefix } from "../../utils";
-import { useRouterError } from "../../utils/useRouterError";
 import { useContextError } from "../../utils/useContextError";
 
 export interface TabpanelProps extends ComponentProps<"div"> {}
-
-type ChildArray = Array<Exclude<ReactNode, boolean | null | undefined>>;
 
 const componentName = "Tabpanel";
 

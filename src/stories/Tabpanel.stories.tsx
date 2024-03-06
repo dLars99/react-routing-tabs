@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Tabpanel } from "../components";
 import { RoutingTabs } from "../context";
-import { Route, Routes } from "react-router-dom";
 
 const meta = {
   title: "Tabpanel",
