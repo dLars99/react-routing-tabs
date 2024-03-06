@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Tabpanel>
+    <Tabpanel style={{ fontFamily: "Arial, sans-serif" }}>
       <h1>Sample tab panel</h1>
       <p>The appropriate tab will route to this</p>
       <p>See devtools for additional accessibility attributes</p>
