@@ -1,6 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { Preview } from "@storybook/react";
+
+const initialRoute = {
+  pathname: "/",
+  state: { rrtId: "abc123" },
+};
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +19,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={[initialRoute]}>
         <Story />
       </MemoryRouter>
     ),
