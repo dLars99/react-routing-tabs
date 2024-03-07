@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, NavLinkProps } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AnchorTabProps } from "./Tab.types";
 import { useRoutingTabs } from "../../context";
 import { panelPrefix } from "../../utils";

@@ -17,17 +17,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const NoLink: Story = {
-  args: {
-    label: "Hi",
-  },
-  render: ({ ...args }) => (
-    <RoutingTabs>
-      <Tab {...args} />
-    </RoutingTabs>
-  ),
-};
-
 export const Link: Story = {
   args: {
     label: "Hi",
