@@ -11,6 +11,13 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <RoutingTabs>
+        <Story />
+      </RoutingTabs>
+    ),
+  ],
 } satisfies Meta<typeof Tab>;
 
 export default meta;
@@ -20,14 +27,10 @@ type Story = StoryObj<typeof meta>;
 export const Link: Story = {
   args: {
     label: "Hi",
-    link: "hi",
+    link: "tab-1",
     isNav: false,
   },
-  render: ({ ...args }) => (
-    <RoutingTabs>
-      <Tab {...args} />
-    </RoutingTabs>
-  ),
+  render: ({ ...args }) => <Tab {...args} />,
 };
 
 export const NavLink: Story = {
@@ -36,11 +39,7 @@ export const NavLink: Story = {
     link: "hi",
     isNav: true,
   },
-  render: ({ ...args }) => (
-    <RoutingTabs>
-      <Tab {...args} />
-    </RoutingTabs>
-  ),
+  render: ({ ...args }) => <Tab {...args} />,
 };
 
 export const WithChildren: Story = {
@@ -49,20 +48,18 @@ export const WithChildren: Story = {
     link: "hi",
   },
   render: ({ ...args }) => (
-    <RoutingTabs>
-      <Tab {...args}>
-        <div style={{ alignItems: "center", display: "flex", gap: "1rem" }}>
-          <div
-            style={{
-              borderRadius: "50%",
-              backgroundColor: "blue",
-              height: "2rem",
-              width: "2rem",
-            }}
-          />
-          <h3>This is custom content</h3>
-        </div>
-      </Tab>
-    </RoutingTabs>
+    <Tab {...args}>
+      <div style={{ alignItems: "center", display: "flex", gap: "1rem" }}>
+        <div
+          style={{
+            borderRadius: "50%",
+            backgroundColor: "blue",
+            height: "2rem",
+            width: "2rem",
+          }}
+        />
+        <h3>This is custom content</h3>
+      </div>
+    </Tab>
   ),
 };

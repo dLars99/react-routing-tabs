@@ -2,7 +2,8 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { RoutingTabs } from "../context";
-import { Tab, TabList } from "../components";
+import { Tab, TabList, TabPanelWindow } from "../components";
+import { useLocation } from "react-router-dom";
 
 const meta = {
   title: "Routing Tabs",
@@ -21,8 +22,12 @@ export const Default: Story = {
   render: () => (
     <RoutingTabs>
       <TabList>
-        <Tab label="Tab" />
+        <Tab label="Tab 1" link="tab-1" />
+
+        <Tab label="Tab 2" link="tab-2" />
       </TabList>
+
+      <TabPanelWindow isOutlet />
     </RoutingTabs>
   ),
 };
@@ -30,11 +35,11 @@ export const Default: Story = {
 const config = [
   {
     name: "Tab 1",
-    route: "first",
+    route: "tab-1",
   },
   {
     name: "Tab 2",
-    route: "second",
+    route: "tab-2",
   },
 ];
 export const Config: Story = {

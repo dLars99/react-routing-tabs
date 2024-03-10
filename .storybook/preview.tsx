@@ -1,11 +1,47 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { Preview } from "@storybook/react";
+import React, { ReactElement } from "react";
+import {
+  MemoryRouter,
+  Outlet,
+  Route,
+  RouterProvider,
+  Routes,
+  createMemoryRouter,
+} from "react-router-dom";
+import { Preview, StoryFn } from "@storybook/react";
+import { Tabpanel1, Tabpanel2 } from "../src/stories/TabpanelSamples";
 
-const initialRoute = {
-  pathname: "/",
-  state: { rrtId: "abc123" },
-};
+const initialEntries = [
+  {
+    pathname: "/",
+    state: { rrtId: "abc123" },
+  },
+];
+
+const memoryRouter = (Story: StoryFn) =>
+  createMemoryRouter(
+    [
+      {
+        path: "/",
+        element: <Story />,
+        children: [
+          {
+            element: <Outlet />,
+            children: [
+              {
+                path: "tab-1",
+                element: <Tabpanel1 />,
+              },
+              {
+                path: "tab-2",
+                element: <Tabpanel2 />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    { initialEntries }
+  );
 
 const preview: Preview = {
   parameters: {
@@ -17,13 +53,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <MemoryRouter initialEntries={[initialRoute]}>
-        <Story />
-      </MemoryRouter>
-    ),
-  ],
+  decorators: [(Story) => <RouterProvider router={memoryRouter(Story)} />],
 };
 
 export default preview;

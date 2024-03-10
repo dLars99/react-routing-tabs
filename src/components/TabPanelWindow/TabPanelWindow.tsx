@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
-
+import "./styles/tabpanelWindow.css";
 interface TabPanelWindowProps {
   children?: ReactNode;
   isOutlet?: boolean;
@@ -11,7 +11,7 @@ export const TabPanelWindow = ({
   isOutlet = false,
 }: TabPanelWindowProps) => {
   return (
-    <div>
+    <div className="tabpanelWindow">
       {isOutlet ? <Outlet /> : null}
 
       {children}
