@@ -36,7 +36,7 @@ export const Link: Story = {
 export const NavLink: Story = {
   args: {
     label: "Hi",
-    link: "hi",
+    link: "tab-1",
     isNav: true,
   },
   render: ({ ...args }) => <Tab {...args} />,
@@ -45,7 +45,7 @@ export const NavLink: Story = {
 export const WithChildren: Story = {
   args: {
     label: "Hi",
-    link: "hi",
+    link: "tab-1",
   },
   render: ({ ...args }) => (
     <Tab {...args}>
