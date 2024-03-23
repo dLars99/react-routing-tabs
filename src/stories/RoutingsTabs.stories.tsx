@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { RoutingTabs } from "../context";
 import { Tab, TabList, TabPanelWindow } from "../components";
-import { useLocation } from "react-router-dom";
 
 const meta = {
   title: "Routing Tabs",
@@ -49,6 +48,8 @@ export const Config: Story = {
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
       <TabList />
+
+      <TabPanelWindow isOutlet />
     </RoutingTabs>
   ),
 };
@@ -71,6 +72,8 @@ export const Data: Story = {
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
       <TabList />
+
+      <TabPanelWindow isOutlet />
     </RoutingTabs>
   ),
 };

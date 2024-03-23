@@ -43,9 +43,15 @@ export const Horizontal: Story = {
   },
   render: (args) => (
     <TabList {...args}>
-      <Tab label="Thing 1">Thing 1</Tab>
-      <Tab label="Thing 2">Thing 2</Tab>
-      <Tab label="Thing 3">Thing 3</Tab>
+      <Tab label="Thing 1" link="tab-1">
+        Thing 1
+      </Tab>
+      <Tab label="Thing 2" link="tab-2">
+        Thing 2
+      </Tab>
+      <Tab label="Thing 3" link="tab-3">
+        Thing 3
+      </Tab>
     </TabList>
   ),
 };

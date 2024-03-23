@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   useCallback,
   useId,
+  useRef,
 } from "react";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
@@ -26,8 +27,10 @@ export const Tab = forwardRef(
       throw new Error(tabContextError);
     }
 
+    const internalRef = useRef<HTMLAnchorElement>();
     const { changeTab, selectedTabId, tabRef } = routingTabContext;
     const combinedRef = useCallback((node: HTMLAnchorElement) => {
+      internalRef.current = node;
       tabRef(node);
       if (typeof outsideTabRef === "function") {
         outsideTabRef(node);
@@ -36,20 +39,18 @@ export const Tab = forwardRef(
       }
     }, []);
 
-    const id = useId().replace(/:/g, "");
-    const tabId = tabPrefix + id;
+    const tabId = internalRef.current?.id;
     const isSelected = tabId === selectedTabId;
 
     const onClick = (e: MouseEvent) => {
       e.preventDefault();
-      if (isSelected || !props.disabled) {
+      if (tabId && (isSelected || !props.disabled)) {
         changeTab(tabId);
       }
     };
 
     const extendedProps = {
       combinedRef,
-      id,
       tabId,
       isSelected,
       onClick,

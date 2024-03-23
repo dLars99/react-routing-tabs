@@ -11,6 +11,8 @@ import {
   RoutingTabsProps,
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
+import { tabPrefix } from "../utils";
+import { generateStableId } from "../utils/generateStableId";
 
 export const RoutingTabContext =
   createContext<RoutingTabContextValue<any>>(null);
@@ -31,10 +33,9 @@ export const RoutingTabs = <T,>(
 
   const assignChildTab = useCallback(
     (node: HTMLAnchorElement): void => {
-      const childTabIndex = childTabs.findIndex(
-        (childTab: HTMLAnchorElement) => childTab?.id === node?.id
-      );
-      if (node && childTabIndex === -1) {
+      if (node && !node.id) {
+        const id = generateStableId();
+        node.id = tabPrefix + id;
         setChildTabs((currentTabs) => [...currentTabs, node]);
       }
     },
@@ -63,14 +64,14 @@ export const RoutingTabs = <T,>(
       pathSegments[pathSegments.length - 1] ||
       pathSegments[pathSegments.length - 2];
 
-    if (!tabRoutes.includes(finalPathSegment)) {
+    const pathRouteIndex = tabRoutes.findIndex(
+      (tabRoute) => finalPathSegment && tabRoute.includes(finalPathSegment)
+    );
+    if (pathRouteIndex === -1) {
       // no tab in route - go to selected tab
       changeRouteFromId(selectedTabId, true);
     } else {
       // make sure our index matches the tab in the route
-      const pathRouteIndex = tabRoutes.findIndex(
-        (tabRoute) => tabRoute === finalPathSegment
-      );
       const pathRouteId = childTabs[pathRouteIndex]?.id;
       if (pathRouteId && selectedTabId !== pathRouteId) {
         setSelectedTabId(pathRouteId);
@@ -95,7 +96,7 @@ export const RoutingTabs = <T,>(
       navigate(getNewLocation(tabRoutes[newRouteIndex]), {
         replace,
         state: {
-          rrtId: id,
+          rrtId: id.split("-")[1],
         },
       });
     },

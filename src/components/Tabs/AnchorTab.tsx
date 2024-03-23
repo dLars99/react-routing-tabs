@@ -8,14 +8,14 @@ export const AnchorTab = ({
   children,
   combinedRef,
   disabled = false,
-  id,
   isNav = false,
   isSelected,
   label,
-  link = "/.",
+  link = ".",
   onClick,
   tabId,
 }: AnchorTabProps) => {
+  const rawId = tabId?.split("-")[1];
   const routingTabContext = useRoutingTabs();
   if (!routingTabContext) return null;
   const { useHashRouting } = routingTabContext;
@@ -23,11 +23,10 @@ export const AnchorTab = ({
 
   return isNav ? (
     <NavLink
-      aria-controls={panelPrefix + id}
+      aria-controls={panelPrefix + rawId}
       aria-disabled={disabled}
       aria-selected={isSelected}
       className="tab__link"
-      id={tabId}
       onClick={onClick}
       ref={combinedRef}
       role="tab"
@@ -38,16 +37,15 @@ export const AnchorTab = ({
     </NavLink>
   ) : (
     <Link
-      aria-controls={panelPrefix + id}
+      aria-controls={panelPrefix + rawId}
       aria-disabled={disabled}
       aria-selected={isSelected}
       className="tab__link"
-      id={tabId}
       onClick={onClick}
       ref={combinedRef}
       role="tab"
       tabIndex={isSelected ? 0 : -1}
-      to={disabled ? "/." : parsedLink}
+      to={disabled ? "." : parsedLink}
     >
       {children ?? label}
     </Link>

@@ -1,14 +1,7 @@
-import React, { ReactElement } from "react";
-import {
-  MemoryRouter,
-  Outlet,
-  Route,
-  RouterProvider,
-  Routes,
-  createMemoryRouter,
-} from "react-router-dom";
+import React from "react";
+import { Outlet, RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Preview, StoryFn } from "@storybook/react";
-import { Tabpanel1, Tabpanel2 } from "../src/stories/TabpanelSamples";
+import { TabpanelSample } from "../src/stories/TabpanelSample";
 
 const initialEntries = [
   {
@@ -29,11 +22,15 @@ const memoryRouter = (Story: StoryFn) =>
             children: [
               {
                 path: "tab-1",
-                element: <Tabpanel1 />,
+                element: <TabpanelSample panelNumber={1} />,
               },
               {
                 path: "tab-2",
-                element: <Tabpanel2 />,
+                element: <TabpanelSample panelNumber={2} />,
+              },
+              {
+                path: "tab-3",
+                element: <TabpanelSample panelNumber={3} />,
               },
             ],
           },

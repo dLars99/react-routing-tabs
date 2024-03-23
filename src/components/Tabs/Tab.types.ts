@@ -25,8 +25,7 @@ export interface TabProps extends ComponentPropsWithRef<"a"> {
 
 export interface AnchorTabProps extends TabProps {
   combinedRef: (node: HTMLAnchorElement) => void;
-  id: string;
-  tabId: string;
+  tabId: string | undefined;
   isSelected: boolean;
   onClick: (e: MouseEvent) => void;
 }
