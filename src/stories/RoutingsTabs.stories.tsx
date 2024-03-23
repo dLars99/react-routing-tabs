@@ -26,7 +26,7 @@ export const Default: Story = {
         <Tab label="Tab 2" link="tab-2" />
       </TabList>
 
-      <TabPanelWindow isOutlet />
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };
@@ -49,7 +49,7 @@ export const Config: Story = {
     <RoutingTabs {...args}>
       <TabList />
 
-      <TabPanelWindow isOutlet />
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };
@@ -73,7 +73,7 @@ export const Data: Story = {
     <RoutingTabs {...args}>
       <TabList />
 
-      <TabPanelWindow isOutlet />
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };

@@ -11,7 +11,7 @@ enableFetchMocks();
 
 const TestComponent = () => (
   <RoutingTabs>
-    <TabPanelWindow isOutlet>
+    <TabPanelWindow>
       <Tabpanel>
         <h1>Test Tabpanel</h1>
         <p>Howdy!</p>
