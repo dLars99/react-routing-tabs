@@ -55,7 +55,8 @@ export const RoutingTabs = <T,>(
 
   // Get initial tab id from route
   useEffect(() => {
-    if (tabRoutes.length < 1 || !location.pathname) return;
+    if (tabRoutes.length < 1 || childTabs.length < 1 || !location.pathname)
+      return;
     const pathSegments = location.pathname.split(
       props.useHashRouting ? "#" : "/"
     );
@@ -68,7 +69,7 @@ export const RoutingTabs = <T,>(
       (tabRoute) => finalPathSegment && tabRoute.includes(finalPathSegment)
     );
     if (pathRouteIndex === -1) {
-      // no tab in route - go to selected tab
+      // no tab in route - go to selected tab or first tab
       changeRouteFromId(selectedTabId, true);
     } else {
       // make sure our index matches the tab in the route
@@ -77,7 +78,7 @@ export const RoutingTabs = <T,>(
         setSelectedTabId(pathRouteId);
       }
     }
-  }, [location.pathname, tabRoutes, props.useHashRouting]);
+  }, [childTabs, location.pathname, tabRoutes, props.useHashRouting]);
 
   const changeTab = useCallback(
     (id: string): void => {
@@ -93,10 +94,11 @@ export const RoutingTabs = <T,>(
         (childTab) => childTab.id === id
       );
       const newRouteIndex = foundTabIndex > -1 ? foundTabIndex : 0;
+      const newId = id || childTabs[0].id;
       navigate(getNewLocation(tabRoutes[newRouteIndex]), {
         replace,
         state: {
-          rrtId: id.split("-")[1],
+          rrtId: newId.split("-")[1],
         },
       });
     },
