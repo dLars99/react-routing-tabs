@@ -56,10 +56,12 @@ export const Config: Story = {
 
 const data = [
   {
+    id: 1,
     name: "Tab 1",
     description: "First tab",
   },
   {
+    id: 2,
     name: "Tab 2",
     description: "Second tab",
   },
@@ -67,6 +69,7 @@ const data = [
 export const Data: Story = {
   args: {
     data: data,
+    // @ts-expect-error - 'Partial' on Storybook args disrupts data props type detection
     tabLabelKey: "name",
   },
   render: ({ ...args }) => (

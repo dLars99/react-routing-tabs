@@ -1,5 +1,3 @@
-import { MutableRefObject } from "react";
-
 export type RoutingTabsConfig = {
   name: string;
   route?: string;

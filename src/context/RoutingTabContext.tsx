@@ -124,9 +124,3 @@ export const RoutingTabs = <T,>(
     </RoutingTabContext.Provider>
   );
 };
-
-// We might want both config AND data
-// If so, add a 'useDataRoutes' prop (in options? config?) to use values from data
-
-// Option 3: don't use those for routes. Just use value passed from 'to' in tab itself
-// (how to update on initial load?)
