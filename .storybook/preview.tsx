@@ -50,7 +50,13 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [(Story) => <RouterProvider router={memoryRouter(Story)} />],
+  decorators: [
+    (Story) => (
+      <div style={{ minWidth: "300px" }}>
+        <RouterProvider router={memoryRouter(Story)} />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
