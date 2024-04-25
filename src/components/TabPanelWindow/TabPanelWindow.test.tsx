@@ -7,7 +7,7 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 const routes = [
   {
     path: "/",
-    element: <TabPanelWindow isOutlet />,
+    element: <TabPanelWindow />,
     children: [
       {
         path: "test",
@@ -33,7 +33,7 @@ describe("TabPanelWindow", () => {
     expect(screen.getByText("Howdy!")).toBeInTheDocument();
   });
 
-  it("should function as an Outlet when isOutlet is true", async () => {
+  it("should function as an Outlet", async () => {
     render(<RouterProvider router={router} />);
 
     await screen.findByText("Howdy!");

@@ -1,10 +1,6 @@
-export const mapChildRoutes = (childTabs: HTMLAnchorElement[]): string[] => {
-  return childTabs.reduce(
-    (childRoutes: string[], childTab: HTMLAnchorElement) => {
-      const href = childTab.href || childTab.id;
-      const nextRoutes = [...childRoutes, href];
-      return nextRoutes;
-    },
-    []
-  );
-};
+export const mapChildRoutes = (childTabs: HTMLAnchorElement[]): string[] =>
+  childTabs.map((childTab: HTMLAnchorElement) => {
+    const href = childTab.attributes.getNamedItem("href");
+    const path = href?.value || childTab.id;
+    return path;
+  });

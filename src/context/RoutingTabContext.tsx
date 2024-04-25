@@ -11,6 +11,8 @@ import {
   RoutingTabsProps,
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
+import { tabPrefix } from "../utils";
+import { generateStableId } from "../utils/generateStableId";
 
 export const RoutingTabContext =
   createContext<RoutingTabContextValue<any>>(null);
@@ -31,10 +33,9 @@ export const RoutingTabs = <T,>(
 
   const assignChildTab = useCallback(
     (node: HTMLAnchorElement): void => {
-      const childTabIndex = childTabs.findIndex(
-        (childTab: HTMLAnchorElement) => childTab?.id === node?.id
-      );
-      if (node && childTabIndex === -1) {
+      if (node && !node.id) {
+        const id = generateStableId();
+        node.id = tabPrefix + id;
         setChildTabs((currentTabs) => [...currentTabs, node]);
       }
     },
@@ -54,7 +55,8 @@ export const RoutingTabs = <T,>(
 
   // Get initial tab id from route
   useEffect(() => {
-    if (tabRoutes.length < 1 || !location.pathname) return;
+    if (tabRoutes.length < 1 || childTabs.length < 1 || !location.pathname)
+      return;
     const pathSegments = location.pathname.split(
       props.useHashRouting ? "#" : "/"
     );
@@ -63,20 +65,20 @@ export const RoutingTabs = <T,>(
       pathSegments[pathSegments.length - 1] ||
       pathSegments[pathSegments.length - 2];
 
-    if (!tabRoutes.includes(finalPathSegment)) {
-      // no tab in route - go to selected tab
+    const pathRouteIndex = tabRoutes.findIndex(
+      (tabRoute) => finalPathSegment && tabRoute.includes(finalPathSegment)
+    );
+    if (pathRouteIndex === -1) {
+      // no tab in route - go to selected tab or first tab
       changeRouteFromId(selectedTabId, true);
     } else {
       // make sure our index matches the tab in the route
-      const pathRouteIndex = tabRoutes.findIndex(
-        (tabRoute) => tabRoute === finalPathSegment
-      );
       const pathRouteId = childTabs[pathRouteIndex]?.id;
       if (pathRouteId && selectedTabId !== pathRouteId) {
         setSelectedTabId(pathRouteId);
       }
     }
-  }, [location.pathname, tabRoutes, props.useHashRouting]);
+  }, [childTabs, location.pathname, tabRoutes, props.useHashRouting]);
 
   const changeTab = useCallback(
     (id: string): void => {
@@ -92,10 +94,11 @@ export const RoutingTabs = <T,>(
         (childTab) => childTab.id === id
       );
       const newRouteIndex = foundTabIndex > -1 ? foundTabIndex : 0;
+      const newId = id || childTabs[0].id;
       navigate(getNewLocation(tabRoutes[newRouteIndex]), {
         replace,
         state: {
-          rrtId: id,
+          rrtId: newId.split("-")[1],
         },
       });
     },
@@ -121,9 +124,3 @@ export const RoutingTabs = <T,>(
     </RoutingTabContext.Provider>
   );
 };
-
-// We might want both config AND data
-// If so, add a 'useDataRoutes' prop (in options? config?) to use values from data
-
-// Option 3: don't use those for routes. Just use value passed from 'to' in tab itself
-// (how to update on initial load?)

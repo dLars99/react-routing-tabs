@@ -2,7 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { RoutingTabs } from "../context";
-import { Tab, TabList } from "../components";
+import { Tab, TabList, TabPanelWindow } from "../components";
 
 const meta = {
   title: "Routing Tabs",
@@ -21,8 +21,12 @@ export const Default: Story = {
   render: () => (
     <RoutingTabs>
       <TabList>
-        <Tab label="Tab" />
+        <Tab label="Tab 1" link="tab-1" />
+
+        <Tab label="Tab 2" link="tab-2" />
       </TabList>
+
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };
@@ -30,11 +34,11 @@ export const Default: Story = {
 const config = [
   {
     name: "Tab 1",
-    route: "first",
+    route: "tab-1",
   },
   {
     name: "Tab 2",
-    route: "second",
+    route: "tab-2",
   },
 ];
 export const Config: Story = {
@@ -44,16 +48,20 @@ export const Config: Story = {
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
       <TabList />
+
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };
 
 const data = [
   {
+    id: 1,
     name: "Tab 1",
     description: "First tab",
   },
   {
+    id: 2,
     name: "Tab 2",
     description: "Second tab",
   },
@@ -61,11 +69,14 @@ const data = [
 export const Data: Story = {
   args: {
     data: data,
+    // @ts-expect-error - 'Partial' on Storybook args disrupts data props type detection
     tabLabelKey: "name",
   },
   render: ({ ...args }) => (
     <RoutingTabs {...args}>
       <TabList />
+
+      <TabPanelWindow />
     </RoutingTabs>
   ),
 };

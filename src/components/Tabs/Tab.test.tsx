@@ -87,7 +87,7 @@ describe("Tab", () => {
     render(<RouterProvider router={router} />);
 
     await screen.findByRole("tab");
-    expect(screen.getByRole("tab")).toHaveAttribute("href", "/.");
+    expect(screen.getByRole("tab")).toHaveAttribute("href", "/");
   });
 
   it("should render the label when no children are provided", async () => {
