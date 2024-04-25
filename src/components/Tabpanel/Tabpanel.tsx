@@ -13,6 +13,9 @@ export interface TabpanelProps extends ComponentProps<"div"> {}
 
 const componentName = "Tabpanel";
 
+/**
+ * Wrapper element for any tabpanel content to provide accessibility features.
+ */
 export const Tabpanel = forwardRef(
   (
     { children, ...props }: PropsWithChildren<TabpanelProps>,

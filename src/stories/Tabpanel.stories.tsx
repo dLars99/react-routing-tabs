@@ -25,6 +25,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  parameters: {
+    controls: { hideNoControlsWarning: true },
+  },
   render: () => (
     <Tabpanel style={{ fontFamily: "Arial, sans-serif" }}>
       <h1>Sample tab panel</h1>
