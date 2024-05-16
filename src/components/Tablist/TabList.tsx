@@ -31,7 +31,7 @@ export interface TabListProps extends ComponentPropsWithRef<"ul"> {
 
 /**
  * Element which acts as a container for the tabs.
- * Renders as a `ul` tag and accepts an optional ref from the user
+ * Renders as a `ul` tag and accepts an optional `ref` from the user
  */
 export const TabList = forwardRef(
   (
