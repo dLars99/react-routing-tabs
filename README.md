@@ -197,6 +197,7 @@ Renders as a `ul` tag and accepts an optional `ref` from the user.
 Component for an individual tab within the tab list
 Renders as a `li` tag and accepts an optional ref from the user
 Inside the `li` tag, an `a` will render to provide the routing for the tab
+Accepts an optional `ref` from the user
 Clicking a tab routes to the correct location and, with a properly configured `TabpanelWindow` and `Tabpanel`, displays the appropriate `Tabpanel`.
 
 #### Props
@@ -226,6 +227,7 @@ The area where the `Tabpanels` are displayed. This is a glorifed `Outlet` for `r
 
 ### Tabpanel
 Wrapper element for any tabpanel content to provide accessibility features.
+Accepts an optional `ref` from the user
 
 #### Props
 (extends `extends ComponentProps<"div">`)
