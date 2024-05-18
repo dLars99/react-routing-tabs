@@ -11,8 +11,7 @@ import {
   RoutingTabsProps,
 } from "./RoutingTabContext.types";
 import { useTabRoutes } from "./hooks";
-import { tabPrefix } from "../utils";
-import { generateStableId } from "../utils/generateStableId";
+import { generateStableId, tabPrefix } from "../utils";
 
 export const RoutingTabContext =
   createContext<RoutingTabContextValue<any>>(null);

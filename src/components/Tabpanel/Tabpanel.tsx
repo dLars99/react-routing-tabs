@@ -6,8 +6,7 @@ import React, {
 } from "react";
 import { useRoutingTabs } from "../../context";
 import { useLocation } from "react-router-dom";
-import { panelPrefix, tabPrefix } from "../../utils";
-import { useContextError } from "../../utils/useContextError";
+import { panelPrefix, tabPrefix, useContextError } from "../../utils";
 
 export interface TabpanelProps extends ComponentProps<"div"> {}
 
