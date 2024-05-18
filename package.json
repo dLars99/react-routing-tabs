@@ -1,10 +1,14 @@
 {
   "name": "react-routing-tabs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Accessible tabs React component that connects to react-router-dom",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "storybook": "storybook dev -p 6006",
