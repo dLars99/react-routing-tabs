@@ -1,38 +1,33 @@
-name: Release
+name: Create Release
+
 on:
   push:
-    branches:
-      - master
-
-permissions:
-  contents: read # for checkout
+    tags:
+      - "v*"
 
 jobs:
-  release:
-    name: Release
+  test:
+    name: Verify unit tests
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "lts/*"
-      - name: Install yarn
-        run: npm install -g yarn
-      - name: Install dependencies
+        uses: actions/checkout@v4
+      - name: Yarn install
         run: yarn install --frozen-lockfile
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: yarn audit signatures
-      - name: Release
+      - name: Run tests
+        run: yarn test
+
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v2
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        run: gh release create --notes '${{ steps.extract-release-notes.outputs.release_notes }}' --title ${{ github.ref_name }} ${{ github.ref_name }}
