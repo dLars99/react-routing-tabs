@@ -15,6 +15,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "dlars99"
       - run: yarn install --frozen-lockfile
-      - run: yarn publish
+      - run: yarn publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
