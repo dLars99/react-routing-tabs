@@ -13,8 +13,8 @@ export const ConfigTabs = () => {
     ? config.map((configItem) => (
         <Tab
           key={configItem.route}
-          label={configItem.name}
-          link={configItem.route}
+          name={configItem.name}
+          route={configItem.route}
         />
       ))
     : null;

@@ -10,8 +10,8 @@ export const AnchorTab = ({
   disabled = false,
   isNav = false,
   isSelected,
-  label,
-  link = ".",
+  name,
+  route = ".",
   onClick,
   tabId,
 }: AnchorTabProps) => {
@@ -19,7 +19,7 @@ export const AnchorTab = ({
   const routingTabContext = useRoutingTabs();
   if (!routingTabContext) return null;
   const { useHashRouting } = routingTabContext;
-  const parsedLink = useHashRouting ? "#" + link : link;
+  const parsedLink = useHashRouting ? "#" + route : route;
 
   return isNav ? (
     <NavLink
@@ -33,7 +33,7 @@ export const AnchorTab = ({
       tabIndex={isSelected ? 0 : -1}
       to={disabled ? "" : parsedLink}
     >
-      {children ?? label}
+      {children ?? name}
     </NavLink>
   ) : (
     <Link
@@ -47,7 +47,7 @@ export const AnchorTab = ({
       tabIndex={isSelected ? 0 : -1}
       to={disabled ? "." : parsedLink}
     >
-      {children ?? label}
+      {children ?? name}
     </Link>
   );
 };

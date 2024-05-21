@@ -43,13 +43,13 @@ export const Horizontal: Story = {
   },
   render: (args) => (
     <TabList {...args}>
-      <Tab label="Thing 1" link="tab-1">
+      <Tab name="Thing 1" route="tab-1">
         Thing 1
       </Tab>
-      <Tab label="Thing 2" link="tab-2">
+      <Tab name="Thing 2" route="tab-2">
         Thing 2
       </Tab>
-      <Tab label="Thing 3" link="tab-3">
+      <Tab name="Thing 3" route="tab-3">
         Thing 3
       </Tab>
     </TabList>
@@ -62,13 +62,13 @@ export const Vertical: Story = {
   },
   render: (args) => (
     <TabList {...args}>
-      <Tab label="Thing 1" link="tab-1">
+      <Tab name="Thing 1" route="tab-1">
         Thing 1
       </Tab>
-      <Tab label="Thing 2" link="tab-2">
+      <Tab name="Thing 2" route="tab-2">
         Thing 2
       </Tab>
-      <Tab label="Thing 3" link="tab-3">
+      <Tab name="Thing 3" route="tab-3">
         Thing 3
       </Tab>
     </TabList>

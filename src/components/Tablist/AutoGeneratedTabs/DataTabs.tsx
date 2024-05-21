@@ -24,8 +24,8 @@ export const DataTabs = <T,>() => {
     ? data.map((data, index) => (
         <Tab
           key={tabRoutes[index]}
-          label={dataIsPrimitive ? String(data) : String(data[tabLabelKey])}
-          link={tabRoutes[index]}
+          name={dataIsPrimitive ? String(data) : String(data[tabLabelKey])}
+          route={tabRoutes[index]}
         />
       ))
     : null;

@@ -11,14 +11,14 @@ enableFetchMocks();
 
 const FullTestComponent = ({
   children,
-  link,
+  route,
 }: {
   children?: ReactNode;
-  link?: string;
+  route?: string;
 }) => (
   <RoutingTabs>
     <TabList>
-      <Tab label="tab1" link={link}>
+      <Tab name="tab1" route={route}>
         {children}
       </Tab>
     </TabList>
@@ -28,7 +28,7 @@ const FullTestComponent = ({
 const defaultTestRoutes = [
   {
     path: "*",
-    element: <FullTestComponent link="tab2">Howdy!</FullTestComponent>,
+    element: <FullTestComponent route="tab2">Howdy!</FullTestComponent>,
   },
 ];
 
@@ -44,7 +44,7 @@ describe("Tab", () => {
     const consoleSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    expect(() => render(<Tab label="Howdy!" tabIndex={0} />)).toThrow(
+    expect(() => render(<Tab name="Howdy!" tabIndex={0} />)).toThrow(
       "Tab must be wrapped in a RoutingTabs component"
     );
     consoleSpy.mockRestore();
@@ -70,7 +70,7 @@ describe("Tab", () => {
     expect(screen.getByText("Howdy!")).toBeInTheDocument();
   });
 
-  it("should render a link when a link is provided", async () => {
+  it("should render a link when a route is provided", async () => {
     const router = createMemoryRouter(defaultTestRoutes, {
       initialEntries: ["/tab-0"],
     });
@@ -80,7 +80,7 @@ describe("Tab", () => {
     expect(screen.getByRole("tab")).toHaveAttribute("href");
   });
 
-  it("should render an empty anchor when no link is provided", async () => {
+  it("should render an empty anchor when no route is provided", async () => {
     const router = createMemoryRouter(linklessTestRoutes, {
       initialEntries: ["/tab-0"],
     });
@@ -90,7 +90,7 @@ describe("Tab", () => {
     expect(screen.getByRole("tab")).toHaveAttribute("href", "/");
   });
 
-  it("should render the label when no children are provided", async () => {
+  it("should render the name when no children are provided", async () => {
     const router = createMemoryRouter(linklessTestRoutes, {
       initialEntries: ["/tab-0"],
     });

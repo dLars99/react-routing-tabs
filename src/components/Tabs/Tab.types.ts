@@ -16,11 +16,11 @@ export interface TabProps extends ComponentPropsWithRef<"a"> {
   /**
    * Display text for the tab
    */
-  label: string;
+  name: string;
   /**
-   * Destination link for the tab
+   * Destination route for the tab
    */
-  link?: string;
+  route?: string;
 }
 
 export interface AnchorTabProps extends TabProps {
