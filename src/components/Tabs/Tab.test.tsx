@@ -11,14 +11,14 @@ enableFetchMocks();
 
 const FullTestComponent = ({
   children,
-  link,
+  route,
 }: {
   children?: ReactNode;
-  link?: string;
+  route?: string;
 }) => (
   <RoutingTabs>
     <TabList>
-      <Tab name="tab1" link={link}>
+      <Tab name="tab1" route={route}>
         {children}
       </Tab>
     </TabList>
@@ -28,7 +28,7 @@ const FullTestComponent = ({
 const defaultTestRoutes = [
   {
     path: "*",
-    element: <FullTestComponent link="tab2">Howdy!</FullTestComponent>,
+    element: <FullTestComponent route="tab2">Howdy!</FullTestComponent>,
   },
 ];
 
@@ -70,7 +70,7 @@ describe("Tab", () => {
     expect(screen.getByText("Howdy!")).toBeInTheDocument();
   });
 
-  it("should render a link when a link is provided", async () => {
+  it("should render a link when a route is provided", async () => {
     const router = createMemoryRouter(defaultTestRoutes, {
       initialEntries: ["/tab-0"],
     });
@@ -80,7 +80,7 @@ describe("Tab", () => {
     expect(screen.getByRole("tab")).toHaveAttribute("href");
   });
 
-  it("should render an empty anchor when no link is provided", async () => {
+  it("should render an empty anchor when no route is provided", async () => {
     const router = createMemoryRouter(linklessTestRoutes, {
       initialEntries: ["/tab-0"],
     });

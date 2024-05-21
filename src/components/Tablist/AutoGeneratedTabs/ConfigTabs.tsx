@@ -14,7 +14,7 @@ export const ConfigTabs = () => {
         <Tab
           key={configItem.route}
           name={configItem.name}
-          link={configItem.route}
+          route={configItem.route}
         />
       ))
     : null;

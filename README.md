@@ -36,9 +36,9 @@ Manually-configured Tab components.
 (
   <RoutingTabs>
     <TabList>
-      <Tab name="Tab 1" link="tab-1" />
+      <Tab name="Tab 1" route="tab-1" />
 
-      <Tab name="Tab 2" link="tab-2" />
+      <Tab name="Tab 2" route="tab-2" />
     </TabList>
 
     <TabPanelWindow />
@@ -104,7 +104,7 @@ Ideal for using tabs with minimal configuration with data from an external sourc
 ```
 
 ### Tabpanels
-Wherever your tabpanel is displayed for each link, wrap it in a TabPanel component. When rendered, this will wrap your content with all needed attributes to complete accessibility for your tabs.
+Wherever your tabpanel is displayed for each route, wrap it in a TabPanel component. When rendered, this will wrap your content with all needed attributes to complete accessibility for your tabs.
 
 ```tsx
 // Example route from a react-router-dom config
@@ -214,8 +214,8 @@ Clicking a tab routes to the correct location and, with a properly configured `T
 > `name`: string
 > - Display text for the tab
 >
-> `link`?: string
-> - Destination link for the tab. If not provided, the tab will use a slug from the name
+> `route`?: string
+> - Destination route for the tab. If not provided, the tab will use a slug from the name
 
 ----
 ### TabpanelWindow

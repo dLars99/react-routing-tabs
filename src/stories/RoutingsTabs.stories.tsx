@@ -21,9 +21,9 @@ export const Default: Story = {
   render: () => (
     <RoutingTabs>
       <TabList>
-        <Tab name="Tab 1" link="tab-1" />
+        <Tab name="Tab 1" route="tab-1" />
 
-        <Tab name="Tab 2" link="tab-2" />
+        <Tab name="Tab 2" route="tab-2" />
       </TabList>
 
       <TabPanelWindow />

@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 export const Link: Story = {
   args: {
     name: "Hi",
-    link: "tab-1",
+    route: "tab-1",
     isNav: false,
   },
   render: ({ ...args }) => <Tab {...args} />,
@@ -36,7 +36,7 @@ export const Link: Story = {
 export const NavLink: Story = {
   args: {
     name: "Hi",
-    link: "tab-1",
+    route: "tab-1",
     isNav: true,
   },
   render: ({ ...args }) => <Tab {...args} />,
@@ -45,7 +45,7 @@ export const NavLink: Story = {
 export const WithChildren: Story = {
   args: {
     name: "Hi",
-    link: "tab-1",
+    route: "tab-1",
   },
   render: ({ ...args }) => (
     <Tab {...args}>
