@@ -10,7 +10,7 @@ export const AnchorTab = ({
   disabled = false,
   isNav = false,
   isSelected,
-  label,
+  name,
   link = ".",
   onClick,
   tabId,
@@ -33,7 +33,7 @@ export const AnchorTab = ({
       tabIndex={isSelected ? 0 : -1}
       to={disabled ? "" : parsedLink}
     >
-      {children ?? label}
+      {children ?? name}
     </NavLink>
   ) : (
     <Link
@@ -47,7 +47,7 @@ export const AnchorTab = ({
       tabIndex={isSelected ? 0 : -1}
       to={disabled ? "." : parsedLink}
     >
-      {children ?? label}
+      {children ?? name}
     </Link>
   );
 };

@@ -3,14 +3,12 @@ import React, {
   MouseEvent,
   forwardRef,
   useCallback,
-  useId,
   useRef,
 } from "react";
 import "./styles/tab.css";
 import { AnchorTab } from "./AnchorTab";
 import { TabProps } from "./Tab.types";
 import classNames from "classnames";
-import { tabPrefix } from "../../utils";
 import { useRoutingTabs } from "../../context";
 
 /**

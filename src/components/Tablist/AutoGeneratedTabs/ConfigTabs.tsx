@@ -13,7 +13,7 @@ export const ConfigTabs = () => {
     ? config.map((configItem) => (
         <Tab
           key={configItem.route}
-          label={configItem.name}
+          name={configItem.name}
           link={configItem.route}
         />
       ))

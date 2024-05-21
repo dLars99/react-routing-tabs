@@ -36,9 +36,9 @@ Manually-configured Tab components.
 (
   <RoutingTabs>
     <TabList>
-      <Tab label="Tab 1" link="tab-1" />
+      <Tab name="Tab 1" link="tab-1" />
 
-      <Tab label="Tab 2" link="tab-2" />
+      <Tab name="Tab 2" link="tab-2" />
     </TabList>
 
     <TabPanelWindow />
@@ -211,11 +211,11 @@ Clicking a tab routes to the correct location and, with a properly configured `T
 > `isNav?`: boolean
 > - Is this part of a true nav component?
 >
-> `label`: string
+> `name`: string
 > - Display text for the tab
 >
 > `link`?: string
-> - Destination link for the tab. If not provided, the tab will use a slug from the label
+> - Destination link for the tab. If not provided, the tab will use a slug from the name
 
 ----
 ### TabpanelWindow

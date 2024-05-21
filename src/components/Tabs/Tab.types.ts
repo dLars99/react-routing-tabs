@@ -16,7 +16,7 @@ export interface TabProps extends ComponentPropsWithRef<"a"> {
   /**
    * Display text for the tab
    */
-  label: string;
+  name: string;
   /**
    * Destination link for the tab
    */
